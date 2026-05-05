@@ -1,0 +1,602 @@
+{
+  "meta": {
+    "total_pages": 3,
+    "panels_per_page": 8,
+    "total_panels": 24,
+    "page_aspect": "9:16",
+    "coord_w": 1000.0,
+    "coord_h": 1777.7777777777778,
+    "generated_at": "2026-04-17T16:21:43"
+  },
+  "panels": [
+    {
+      "panel_id": "page_001_panel_01",
+      "file_name": "page_001_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 490.7807,
+        "h": 490.5378
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh dấu chân kỳ lạ trên một cánh đồng xanh mướt. Một người phụ nữ tuổi trung niên đứng bên dấu chân, nhìn xuống với vẻ kinh ngạc.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Vào thời Hùng Vương, có một người phụ nữ lớn tuổi sống cô độc, hàng ngày chăm sóc nương rẫy.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi bàn chân ai mà to thế này! Có gì kỳ lạ đây?",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 1,
+      "narration": "Vào thời Hùng Vương, có một người phụ nữ lớn tuổi sống cô độc, hàng ngày chăm sóc nương rẫy.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi bàn chân ai mà to thế này! Có gì kỳ lạ đây?"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_02",
+      "file_name": "page_001_panel_02.jpg",
+      "bbox": {
+        "x": 504.7807,
+        "y": 4.0,
+        "w": 491.2193,
+        "h": 490.5378
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh ngôi nhà khiêm tốn của bà mẹ. Bà mẹ ướm thử bàn chân mình vào dấu chân lạ, ánh mắt đầy nghi hoặc.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Không lâu sau đó, bà cảm thấy một điều kỳ diệu xảy ra.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi! Ví như điều này đưa đến một điều may mắn...",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 2,
+      "narration": "Không lâu sau đó, bà cảm thấy một điều kỳ diệu xảy ra.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi! Ví như điều này đưa đến một điều may mắn..."
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_03",
+      "file_name": "page_001_panel_03.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 504.5378,
+        "w": 618.0353,
+        "h": 307.2323
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh bà mẹ sinh con trong ngôi nhà. Bà mẹ ôm một cậu bé bụ bẫm vừa sinh ra.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Sau nhiều tháng mong chờ, bà đã sinh ra một cậu bé mà bà đặt tên là Gióng.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con sẽ là một điều kỳ diệu cho mẹ!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 3,
+      "narration": "Sau nhiều tháng mong chờ, bà đã sinh ra một cậu bé mà bà đặt tên là Gióng.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con sẽ là một điều kỳ diệu cho mẹ!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_04",
+      "file_name": "page_001_panel_04.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 821.77,
+        "w": 618.0353,
+        "h": 312.0883
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh Gióng một mình nằm chơi trên giường. Gióng 3 tuổi vẫn nằm ngửa, không biết đi hay nói.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nhưng điều kỳ diệu không diễn ra như bà mẹ mong đợi. Gióng chậm phát triển.\nCHARACTERS IN SCENE: Gióng , Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Sao con mãi không lớn? Mẹ lo quá!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 4,
+      "narration": "Nhưng điều kỳ diệu không diễn ra như bà mẹ mong đợi. Gióng chậm phát triển.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Sao con mãi không lớn? Mẹ lo quá!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_05",
+      "file_name": "page_001_panel_05.jpg",
+      "bbox": {
+        "x": 632.0353,
+        "y": 504.5378,
+        "w": 363.9647,
+        "h": 629.3206
+      },
+      "aspect_ratio_api": "2:3",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Ân Vương. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh Binh đoàn giặc Ân ra quân. Giặc Ân tiến đến, phá hoại làng quê.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nguy hiểm gõ cửa, giặc Ân hung tàn xâm lấn đất nước.\nCHARACTERS IN SCENE: Ân Vương\nCURRENT CHARACTER APPEARANCE:\n- Ân Vương: Tướng của giặc Ân, hung tàn và cầm đầu cuộc xâm lược. Cuối cùng, ông bị Gióng đánh bại và chết trong trận chiến.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Ân Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Đốt nhà, cướp của! Thế giới này là của chúng ta!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\an-vuong.png"
+      ],
+      "page_number": 1,
+      "page_order": 5,
+      "narration": "Nguy hiểm gõ cửa, giặc Ân hung tàn xâm lấn đất nước.",
+      "dialogue": [
+        {
+          "character": "Ân Vương",
+          "text": "Đốt nhà, cướp của! Thế giới này là của chúng ta!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_06",
+      "file_name": "page_001_panel_06.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1143.8584,
+        "w": 365.7358,
+        "h": 629.9194
+      },
+      "aspect_ratio_api": "2:3",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Hùng Vương, Sứ giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh Hùng Vương lo lắng trong chốn cung đình. Hùng Vương phái sứ giả đi khắp nơi tìm người tài.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Hùng Vương lo lắng khi chưa tìm được giải pháp bảo vệ dân.\nCHARACTERS IN SCENE: Hùng Vương\nCURRENT CHARACTER APPEARANCE:\n- Hùng Vương: Vị vua cai trị đất nước lúc đó, lo lắng về việc giặc Ân xâm lược. Ông cử sứ giả tìm kiếm người tài đánh giặc và rất vui mừng khi biết đến Gióng.\n- Sứ giả: Người được Hùng Vương cử đi tìm kiếm tướng tài để cứu nước, đã đến gặp Gióng và trở thành cầu nối thông tin giữa Gióng và nhà vua.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Hùng Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Phải tìm ra người tài đánh giặc, không thể để kẻ thù chiếm đất!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\hung-vuong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\su-gia.png"
+      ],
+      "page_number": 1,
+      "page_order": 6,
+      "narration": "Hùng Vương lo lắng khi chưa tìm được giải pháp bảo vệ dân.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Phải tìm ra người tài đánh giặc, không thể để kẻ thù chiếm đất!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_07",
+      "file_name": "page_001_panel_07.jpg",
+      "bbox": {
+        "x": 379.7358,
+        "y": 1143.8584,
+        "w": 616.2642,
+        "h": 316.9542
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Sứ giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Sứ giả tới làng Gióng. Sứ giả gõ cửa nhà Gióng, nhìn vào trong với vẻ ngờ vực.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Tìm đến nơi Gióng cư ngụ, sứ giả đã gặp điều lạ.\nCHARACTERS IN SCENE: Sứ giả\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Sứ giả: Người được Hùng Vương cử đi tìm kiếm tướng tài để cứu nước, đã đến gặp Gióng và trở thành cầu nối thông tin giữa Gióng và nhà vua.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Sứ giả EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Cậu bé này sao chưa biết nói? Mình cần người tài!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\su-gia.png"
+      ],
+      "page_number": 1,
+      "page_order": 7,
+      "narration": "Tìm đến nơi Gióng cư ngụ, sứ giả đã gặp điều lạ.",
+      "dialogue": [
+        {
+          "character": "Sứ giả",
+          "text": "Cậu bé này sao chưa biết nói? Mình cần người tài!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_08",
+      "file_name": "page_001_panel_08.jpg",
+      "bbox": {
+        "x": 379.7358,
+        "y": 1470.8126,
+        "w": 616.2642,
+        "h": 302.9652
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng nhận được tin từ mẹ. Gióng bất ngờ cất tiếng nói.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nhưng, trong sự bối rối, cậu bé đã lên tiếng.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Mẹ cho gọi sứ giả vào đây cho con!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 8,
+      "narration": "Nhưng, trong sự bối rối, cậu bé đã lên tiếng.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Mẹ cho gọi sứ giả vào đây cho con!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_01",
+      "file_name": "page_002_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 581.976,
+        "h": 322.9681
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh sự kinh ngạc của mẹ Gióng. Mẹ Gióng nhìn về phía Gióng với ánh mắt mừng rỡ.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nghe con nói, mẹ không khỏi lấy làm mừng vui nhưng cũng lo lắng.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con nói thật không? Thật kỳ diệu!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 1,
+      "narration": "Nghe con nói, mẹ không khỏi lấy làm mừng vui nhưng cũng lo lắng.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con nói thật không? Thật kỳ diệu!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_02",
+      "file_name": "page_002_panel_02.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 336.9681,
+        "w": 581.976,
+        "h": 324.7988
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Sứ giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh Gióng yêu cầu sứ giả. Gióng cất giọng đầy tự tin.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Gióng yêu cầu những vật liệu đặc biệt để kháng chiến.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Sứ giả: Người được Hùng Vương cử đi tìm kiếm tướng tài để cứu nước, đã đến gặp Gióng và trở thành cầu nối thông tin giữa Gióng và nhà vua.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Hãy báo với nhà Vua rèn cho ta ngựa sắt, gươm sắt, áo giáp sắt và nón sắt!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\su-gia.png"
+      ],
+      "page_number": 2,
+      "page_order": 2,
+      "narration": "Gióng yêu cầu những vật liệu đặc biệt để kháng chiến.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Hãy báo với nhà Vua rèn cho ta ngựa sắt, gươm sắt, áo giáp sắt và nón sắt!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_03",
+      "file_name": "page_002_panel_03.jpg",
+      "bbox": {
+        "x": 595.976,
+        "y": 4.0,
+        "w": 400.024,
+        "h": 657.767
+      },
+      "aspect_ratio_api": "2:3",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Sứ giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh sứ giả trước mặt Gióng. Sứ giả nhìn Gióng với vẻ nghi ngờ nhưng không từ chối.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Mọi người ai cũng ngạc nhiên trước sự quyết tâm của Gióng.\nCHARACTERS IN SCENE: Sứ giả\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Sứ giả: Người được Hùng Vương cử đi tìm kiếm tướng tài để cứu nước, đã đến gặp Gióng và trở thành cầu nối thông tin giữa Gióng và nhà vua.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Sứ giả EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Mặc dù ngươi còn nhỏ, nhưng ta sẽ làm theo lời ngươi!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\su-gia.png"
+      ],
+      "page_number": 2,
+      "page_order": 3,
+      "narration": "Mọi người ai cũng ngạc nhiên trước sự quyết tâm của Gióng.",
+      "dialogue": [
+        {
+          "character": "Sứ giả",
+          "text": "Mặc dù ngươi còn nhỏ, nhưng ta sẽ làm theo lời ngươi!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_04",
+      "file_name": "page_002_panel_04.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 671.767,
+        "w": 358.3537,
+        "h": 613.7348
+      },
+      "aspect_ratio_api": "2:3",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Hùng Vương. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Hùng Vương vui mừng khi nghe tin. Hùng Vương ra lệnh cho thợ rèn.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Hùng Vương vội phát lệnh chỉ đạo, hy vọng vào Gióng.\nCHARACTERS IN SCENE: Hùng Vương\nCURRENT CHARACTER APPEARANCE:\n- Hùng Vương: Vị vua cai trị đất nước lúc đó, lo lắng về việc giặc Ân xâm lược. Ông cử sứ giả tìm kiếm người tài đánh giặc và rất vui mừng khi biết đến Gióng.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Hùng Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Hãy rèn thật nhanh, chúng ta cần người hùng này!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\hung-vuong.png"
+      ],
+      "page_number": 2,
+      "page_order": 4,
+      "narration": "Hùng Vương vội phát lệnh chỉ đạo, hy vọng vào Gióng.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Hãy rèn thật nhanh, chúng ta cần người hùng này!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_05",
+      "file_name": "page_002_panel_05.jpg",
+      "bbox": {
+        "x": 372.3537,
+        "y": 671.767,
+        "w": 623.6463,
+        "h": 305.9168
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Quân sĩ khổ sợ khiêng những món đồ sắt. Hàng chục quân sĩ mồ hôi nhễ nhại mang gươm và ngựa.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Những vật phẩm nặng nề nhưng Gióng cần chúng để thực hiện sứ mệnh.\nCHARACTERS IN SCENE: Quân sĩ\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Quân sĩ EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Nặng quá! Sao không đơn giản hơn?",
+      "ref_images": [],
+      "page_number": 2,
+      "page_order": 5,
+      "narration": "Những vật phẩm nặng nề nhưng Gióng cần chúng để thực hiện sứ mệnh.",
+      "dialogue": [
+        {
+          "character": "Quân sĩ",
+          "text": "Nặng quá! Sao không đơn giản hơn?"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_06",
+      "file_name": "page_002_panel_06.jpg",
+      "bbox": {
+        "x": 372.3537,
+        "y": 987.6838,
+        "w": 623.6463,
+        "h": 297.818
+      },
+      "aspect_ratio_api": "16:9",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh mẹ Gióng lo lắng. Mẹ Gióng gọi con về và nhắc nhở.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Mẹ Gióng nhắc nhở, lo sợ cho con.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con ơi! Việc nhà vua không phải đùa, hãy cẩn thận!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 6,
+      "narration": "Mẹ Gióng nhắc nhở, lo sợ cho con.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ơi! Việc nhà vua không phải đùa, hãy cẩn thận!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_07",
+      "file_name": "page_002_panel_07.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1295.5017,
+        "w": 490.7941,
+        "h": 478.276
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng quyết tâm. Gióng đứng dậy, ánh mắt rực lửa.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nghe lời mẹ, Gióng quyết tâm tự ăn uống để chuẩn bị cho trận chiến.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con sẽ tự lo. Mẹ hãy cho con ăn thật nhiều!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 7,
+      "narration": "Nghe lời mẹ, Gióng quyết tâm tự ăn uống để chuẩn bị cho trận chiến.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Con sẽ tự lo. Mẹ hãy cho con ăn thật nhiều!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_08",
+      "file_name": "page_002_panel_08.jpg",
+      "bbox": {
+        "x": 504.7941,
+        "y": 1295.5017,
+        "w": 491.2059,
+        "h": 478.276
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Mẹ Gióng vội nấu ăn. Mẹ Gióng liên tục thổi cơm cho con, cảnh tượng thật tấp nập.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Bà mẹ không quản ngại, nấu ăn cho con, không ngừng lo lắng.\nCHARACTERS IN SCENE: Mẹ Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Mẹ Gióng: Một người phụ nữ lớn tuổi, sống một mình và đã lâu không có con. Sau khi sinh ra Gióng, bà lo lắng vì cậu không phát triển bình thường như trẻ em khác. Khi biết Gióng có thể nói và muốn đi đánh giặc, bà hết lòng ủng hộ và chăm sóc cho con.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con ăn hết thì mẹ sẽ nấu thêm nữa!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\me-giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 8,
+      "narration": "Bà mẹ không quản ngại, nấu ăn cho con, không ngừng lo lắng.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ăn hết thì mẹ sẽ nấu thêm nữa!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_01",
+      "file_name": "page_003_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 500.1275,
+        "h": 441.877
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng lớn nhanh như thổi. Cận cảnh sự biến hình của Gióng khi trở thành thanh niên.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Với sức mạnh lạ kỳ, Gióng lớn lên từng giờ và dường như không có giới hạn.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Người dân EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Bé Gióng ngày nào giờ lớn nhanh quá!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 1,
+      "narration": "Với sức mạnh lạ kỳ, Gióng lớn lên từng giờ và dường như không có giới hạn.",
+      "dialogue": [
+        {
+          "character": "Người dân",
+          "text": "Bé Gióng ngày nào giờ lớn nhanh quá!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_02",
+      "file_name": "page_003_panel_02.jpg",
+      "bbox": {
+        "x": 514.1275,
+        "y": 4.0,
+        "w": 481.8725,
+        "h": 441.877
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Ngựa sắt, Gươm sắt, Áo giáp sắt. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Ngựa sắt và vũ khí được mang đến. Hàng trăm quân sĩ khiêng ngựa, gươm và giáp đến trước nhà Gióng.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Cuối cùng, những vũ khí được mang đến, tượng trưng cho sức mạnh và ý chí.\nCHARACTERS IN SCENE: Ngựa sắt , Gươm sắt , Áo giáp sắt\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Ngựa sắt: Con ngựa được rèn bằng sắt, giúp Gióng trong trận chiến với giặc. Ngựa phun lửa và phi như bay, hỗ trợ Gióng trong việc đánh bại kẻ thù trước khi cùng Gióng bay lên trời.\n- Gươm sắt: Thanh gươm được rèn từ sắt, là vũ khí chính của Gióng trong trận đấu với giặc. Nó rất nặng và phải có nhiều người khiêng để đưa đến cho Gióng.\n- Áo giáp sắt: Bộ giáp được rèn từ sắt để bảo vệ Gióng trong trận chiến. Nó mặc vừa vặn khi Gióng lớn lên.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Quân sĩ EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Chúng ta đã mang vũ khí tới, chuẩn bị cho trận chiến!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\ngua-sat.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\guom-sat.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\ao-giap-sat.png"
+      ],
+      "page_number": 3,
+      "page_order": 2,
+      "narration": "Cuối cùng, những vũ khí được mang đến, tượng trưng cho sức mạnh và ý chí.",
+      "dialogue": [
+        {
+          "character": "Quân sĩ",
+          "text": "Chúng ta đã mang vũ khí tới, chuẩn bị cho trận chiến!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_03",
+      "file_name": "page_003_panel_03.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 455.877,
+        "w": 496.9319,
+        "h": 441.35
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng mặc giáp. Gióng xuất hiện với vẻ oai phong, tay cầm gươm.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Gióng đã sẵn sàng, ánh mắt quyết tâm mang lại hy vọng cho dân tộc.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ta là tướng nhà trời! Giặc sẽ không còn đất sống!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 3,
+      "narration": "Gióng đã sẵn sàng, ánh mắt quyết tâm mang lại hy vọng cho dân tộc.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Ta là tướng nhà trời! Giặc sẽ không còn đất sống!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_04",
+      "file_name": "page_003_panel_04.jpg",
+      "bbox": {
+        "x": 510.9319,
+        "y": 455.877,
+        "w": 485.0681,
+        "h": 441.35
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh trận chiến ác liệt. Gióng chiến đấu mạnh mẽ, giáp sắt lấp lánh, ngựa phun lửa và nhanh như bay.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Một trận chiến bắt đầu, Gióng và ngựa sắt tiêu diệt quân giặc Ân.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Xông lên! Không để lại kẻ thù nào sống sót!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 4,
+      "narration": "Một trận chiến bắt đầu, Gióng và ngựa sắt tiêu diệt quân giặc Ân.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Xông lên! Không để lại kẻ thù nào sống sót!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_05",
+      "file_name": "page_003_panel_05.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 907.2271,
+        "w": 495.0584,
+        "h": 441.1372
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Ân Vương. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh sự tàn bạo của giặc. Quân giặc xông lên nhưng nhanh chóng bị đánh bại.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Dưới sức mạnh của Gióng, quân giặc hoảng loạn tháo chạy.\nCHARACTERS IN SCENE: Ân Vương\nCURRENT CHARACTER APPEARANCE:\n- Ân Vương: Tướng của giặc Ân, hung tàn và cầm đầu cuộc xâm lược. Cuối cùng, ông bị Gióng đánh bại và chết trong trận chiến.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Ân Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Rút lui! Không thể chịu đựng được nữa!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\an-vuong.png"
+      ],
+      "page_number": 3,
+      "page_order": 5,
+      "narration": "Dưới sức mạnh của Gióng, quân giặc hoảng loạn tháo chạy.",
+      "dialogue": [
+        {
+          "character": "Ân Vương",
+          "text": "Rút lui! Không thể chịu đựng được nữa!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_06",
+      "file_name": "page_003_panel_06.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1358.3643,
+        "w": 495.0584,
+        "h": 415.4135
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng, Ân Vương. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng chiến thắng quân giặc. Gióng dũng mãnh quật ngã Ân Vương.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Gióng đã đánh bại kẻ thù, đất nước lại được tự do.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\n- Ân Vương: Tướng của giặc Ân, hung tàn và cầm đầu cuộc xâm lược. Cuối cùng, ông bị Gióng đánh bại và chết trong trận chiến.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Hãy ghi nhớ! Đây là đất nước của chúng ta!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\an-vuong.png"
+      ],
+      "page_number": 3,
+      "page_order": 6,
+      "narration": "Gióng đã đánh bại kẻ thù, đất nước lại được tự do.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Hãy ghi nhớ! Đây là đất nước của chúng ta!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_07",
+      "file_name": "page_003_panel_07.jpg",
+      "bbox": {
+        "x": 509.0584,
+        "y": 907.2271,
+        "w": 486.9416,
+        "h": 436.0042
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng chuẩn bị rời bỏ trần gian. Gióng cởi bỏ giáp và nón, đứng trên lưng ngựa.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Sau chiến thắng oanh liệt, Gióng lên đường bay về trời.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Tạm biệt quê hương, ta sẽ mãi sống trong lòng dân tộc!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 7,
+      "narration": "Sau chiến thắng oanh liệt, Gióng lên đường bay về trời.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Tạm biệt quê hương, ta sẽ mãi sống trong lòng dân tộc!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_08",
+      "file_name": "page_003_panel_08.jpg",
+      "bbox": {
+        "x": 509.0584,
+        "y": 1353.2312,
+        "w": 486.9416,
+        "h": 420.5465
+      },
+      "aspect_ratio_api": "1:1",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. 100% FULL BLEED IMAGE. ABSOLUTELY NO PAGE BORDERS, NO MARGINS, NO FRAMES, NO PANEL DIVISIONS ALLOWED.\nCRITICAL AESTHETIC RULE: MAINTAIN THE EXACT SAME ART STYLE, BRUSH STROKES, AND COLOR PALETTE THROUGHOUT. DO NOT CHANGE THE VISUAL MEDIUM. VISUAL CONSISTENCY: Use attached images for Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh thiên nhiên khi Gióng bay lên trời. Gióng và ngựa bay lên trời, để lại dấu vết trên mặt đất.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Hình ảnh Gióng bay lên trời sẽ mãi in sâu trong lòng dân tộc, tượng trưng cho lòng yêu nước.\nCHARACTERS IN SCENE: Gióng\nCURRENT CHARACTER APPEARANCE:\n- Gióng: Cậu bé kỳ lạ sinh ra từ một dấu chân lạ, không biết nói hay đi cho đến khi có giặc xâm lăng. Sau khi nghe tin từ nhà vua, cậu lớn lên nhanh chóng và trở thành một chiến binh mạnh mẽ, sử dụng sức mạnh thiên nhiên để đánh bại giặc Ân và cuối cùng bay lên trời, trở thành biểu tượng của lòng yêu nước.\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Người dân EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Gióng là Thánh Gióng của chúng ta! Lòng yêu nước mãi sống!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1621_39b2de80\\chars_output\\giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 8,
+      "narration": "Hình ảnh Gióng bay lên trời sẽ mãi in sâu trong lòng dân tộc, tượng trưng cho lòng yêu nước.",
+      "dialogue": [
+        {
+          "character": "Người dân",
+          "text": "Gióng là Thánh Gióng của chúng ta! Lòng yêu nước mãi sống!"
+        }
+      ]
+    }
+  ]
+}
