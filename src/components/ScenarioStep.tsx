@@ -104,7 +104,7 @@ const AddCharacterForm: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
       <input
         className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
         placeholder="Tên nhân vật mới..."

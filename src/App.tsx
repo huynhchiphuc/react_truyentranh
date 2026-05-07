@@ -33,9 +33,9 @@ const StepperHeader: React.FC = () => {
 
   return (
     <header className="bg-white border-b shadow-sm shrink-0 z-30">
-      <div className="flex items-center justify-between px-6 py-3">
+      <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 gap-3 sm:gap-0">
         {/* Logo + Back button */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
           {/* Back button — chỉ hiện khi không phải bước đầu */}
           {currentIdx > 0 && (
             <button
@@ -50,17 +50,19 @@ const StepperHeader: React.FC = () => {
             </button>
           )}
 
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
-            <BookOpen size={16} className="text-white" />
-          </div>
-          <div>
-            <h1 className="text-base font-extrabold text-slate-800 leading-tight">{config.title}</h1>
-            <p className="text-xs text-slate-400">{config.genre} · {config.totalPages}p · {config.panelsPerPage}k/trang</p>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-md shrink-0">
+              <BookOpen size={16} className="text-white" />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-base font-extrabold text-slate-800 leading-tight truncate">{config.title}</h1>
+              <p className="text-xs text-slate-400 truncate">{config.genre} · {config.totalPages}p · {config.panelsPerPage}k/trang</p>
+            </div>
           </div>
         </div>
 
         {/* Stepper — các bước đã done thì click được để quay lại */}
-        <nav className="flex items-center gap-1">
+        <nav className="flex flex-wrap justify-center sm:justify-end items-center gap-1 w-full sm:w-auto mt-1 sm:mt-0">
           {STEPS.map((s, idx) => {
             const Icon = s.icon;
             const isActive = s.id === step;

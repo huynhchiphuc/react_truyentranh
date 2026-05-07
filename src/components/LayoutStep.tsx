@@ -39,7 +39,7 @@ export const LayoutStep: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Toolbar */}
-      <div className="bg-white border-b px-6 py-3 flex items-center gap-4 shrink-0">
+      <div className="bg-white border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-3 shrink-0">
         <div className="flex items-center gap-2">
           <button onClick={() => pagePrevNext(-1)} disabled={currentIndex <= 0}
             className="p-1.5 rounded-lg border disabled:opacity-30 hover:bg-slate-100 transition-colors">
@@ -54,8 +54,8 @@ export const LayoutStep: React.FC = () => {
           </button>
         </div>
 
-        <div className="ml-auto flex items-center gap-3">
-          <span className="text-xs text-slate-500">
+        <div className="ml-auto flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end mt-2 sm:mt-0">
+          <span className="text-xs text-slate-500 w-full sm:w-auto text-right mb-1 sm:mb-0">
             {currentPage?.panels.length} khung
           </span>
           <button
@@ -78,7 +78,7 @@ export const LayoutStep: React.FC = () => {
       </div>
 
       {/* Page tabs */}
-      <div className="flex gap-1 px-6 pt-3 pb-0 bg-slate-50 border-b">
+      <div className="flex gap-1 px-4 sm:px-6 pt-3 pb-0 bg-slate-50 border-b overflow-x-auto whitespace-nowrap scrollbar-hide">
         {pages.map(pg => (
           <button
             key={pg.id}
@@ -94,9 +94,9 @@ export const LayoutStep: React.FC = () => {
       </div>
 
       {/* Canvas */}
-      <div className="flex-1 overflow-auto bg-slate-300 p-8">
+      <div className="flex-1 overflow-auto bg-slate-300 p-4 sm:p-8 text-center">
         <div
-          className="relative bg-white shadow-2xl mx-auto border border-slate-300"
+          className="relative bg-white shadow-2xl border border-slate-300 inline-block text-left"
           style={{ width: PAGE_CANVAS_W, height: pageH, minHeight: 400 }}
           onClick={() => setSelectedPanel(null)}
         >

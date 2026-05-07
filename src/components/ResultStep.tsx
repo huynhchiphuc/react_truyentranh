@@ -82,7 +82,7 @@ export const ResultStep: React.FC = () => {
       )}
 
       {/* ── Left: Sidebar thumbnails ─────────────────────────────────── */}
-      <div className="w-44 shrink-0 bg-slate-900 flex flex-col border-r border-slate-700/50">
+      <div className="hidden md:flex w-44 shrink-0 bg-slate-900 flex-col border-r border-slate-700/50">
         {/* Stats header */}
         <div className="p-3 border-b border-slate-700/50 bg-slate-800/60">
           <p className="text-white text-xs font-bold uppercase tracking-wide">Trang truyện</p>
@@ -200,7 +200,7 @@ export const ResultStep: React.FC = () => {
       {/* ── Main canvas area ──────────────────────────────────────────── */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Toolbar */}
-        <div className="bg-white border-b px-5 py-2.5 flex items-center gap-3 shrink-0">
+        <div className="bg-white border-b px-4 sm:px-5 py-2.5 flex flex-wrap items-center gap-3 shrink-0">
           {/* Page nav */}
           <div className="flex items-center gap-1.5">
             <button onClick={() => pagePrevNext(-1)} disabled={currentIndex <= 0}
@@ -237,7 +237,7 @@ export const ResultStep: React.FC = () => {
           )}
 
           {/* Right actions */}
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end mt-2 sm:mt-0">
             <button
               onClick={() => setShowScreenplay(v => !v)}
               className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors
@@ -266,9 +266,9 @@ export const ResultStep: React.FC = () => {
         </div>
 
         {/* Canvas */}
-        <div className="flex-1 overflow-auto bg-slate-400/80 p-8">
+        <div className="flex-1 overflow-auto bg-slate-400/80 p-4 sm:p-8 text-center">
           <div
-            className="relative bg-white shadow-2xl mx-auto border border-slate-300"
+            className="relative bg-white shadow-2xl border border-slate-300 inline-block text-left"
             style={{ width: PAGE_CANVAS_W, height: pageH, minHeight: 400 }}
             onClick={() => setSelectedPanel(null)}
           >

@@ -351,7 +351,7 @@ export const CharacterSetupStep: React.FC = () => {
               </div>
             )}
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={analyzeStory}
                 disabled={phase === 'analyzing'}
@@ -420,7 +420,7 @@ export const CharacterSetupStep: React.FC = () => {
             {/* Confirm CTA */}
             {phase === 'done' && (
               <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-5 text-white shadow-lg shadow-emerald-200">
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
                   <div>
                     <p className="font-bold text-lg">Xác nhận nhân vật</p>
                     <p className="text-emerald-100 text-sm mt-0.5">
@@ -431,7 +431,7 @@ export const CharacterSetupStep: React.FC = () => {
                   </div>
                   <button
                     onClick={handleConfirm}
-                    className="flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3
+                    className="flex items-center gap-2 bg-white text-emerald-700 font-bold px-6 py-3 w-full sm:w-auto justify-center
                       rounded-xl hover:bg-emerald-50 transition-all shadow-md active:scale-95 shrink-0"
                   >
                     Tiếp tục <ChevronRight size={18} />
