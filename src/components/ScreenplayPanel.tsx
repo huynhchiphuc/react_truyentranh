@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStoryStore } from '../store/useStoryStore';
-import { X, Users, Quote, ChevronRight, Loader2, Film } from 'lucide-react';
+import { X, Quote, ChevronRight, Loader2, Film } from 'lucide-react';
 
 const RUN_FOLDER = '/run_20260417_1621_39b2de80';
 

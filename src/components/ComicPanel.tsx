@@ -9,7 +9,7 @@ interface ComicPanelProps {
   isResult?: boolean;
 }
 
-export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth, isResult = false }) => {
+export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = false }) => {
   const panel = useStoryStore(s => {
     for (const pg of s.pages) {
       const found = pg.panels.find(p => p.id === panelId);
@@ -70,7 +70,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth
 
   const isSelected = selectedPanelId === panelId;
   const isThisGenerating = generatingPanelId === panelId;
-  const isDraggable = !isResult;
+
 
   const tx = panel.image_transform.x + imgOffset.x;
   const ty = panel.image_transform.y + imgOffset.y;

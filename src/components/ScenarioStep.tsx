@@ -299,9 +299,7 @@ export const ScenarioStep: React.FC = () => {
   const config = useStoryStore(s => s.config);
   const setConfig = useStoryStore(s => s.setConfig);
   const chars = useStoryStore(s => s.globalCharacters);
-  const isGenerating = useStoryStore(s => s.isGenerating);
-  const loadError = useStoryStore(s => s.loadError);
-  const loadFromRunFolder = useStoryStore(s => s.loadFromRunFolder);
+
 
   return (
     <div className="flex-1 overflow-y-auto bg-gradient-to-br from-slate-50 to-indigo-50/30 p-6">

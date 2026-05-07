@@ -16,7 +16,7 @@ const ROLE_BADGE: Record<string, string> = {
 
 // ─── Panel Detail Drawer ──────────────────────────────────────────────────────
 export const PanelDetailDrawer: React.FC = () => {
-  const selectedPanelId = useStoryStore(s => s.selectedPanelId);
+
   const showPanelDetail = useStoryStore(s => s.showPanelDetail);
   const setShow = useStoryStore(s => s.setShowPanelDetail);
   const setSelectedPanel = useStoryStore(s => s.setSelectedPanel);
