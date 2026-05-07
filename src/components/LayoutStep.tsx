@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStoryStore } from '../store/useStoryStore';
 import { ComicPanel } from './ComicPanel';
-import { Sparkles, Wand2, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { Sparkles, Wand2, ChevronLeft, ChevronRight, Loader2, Shuffle } from 'lucide-react';
 
 const PAGE_CANVAS_W = 750;
 
@@ -58,6 +58,13 @@ export const LayoutStep: React.FC = () => {
           <span className="text-xs text-slate-500 w-full sm:w-auto text-right mb-1 sm:mb-0">
             {currentPage?.panels.length} khung
           </span>
+          <button
+            onClick={() => useStoryStore.getState().randomizePageLayout(currentPage.id)}
+            className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 px-3 py-2 rounded-xl transition-colors shadow-sm"
+            title="Đổi bố cục ngẫu nhiên cho trang này"
+          >
+            <Shuffle size={14} /> Đổi bố cục
+          </button>
           <button
             onClick={generateAllScripts}
             disabled={isGenerating}

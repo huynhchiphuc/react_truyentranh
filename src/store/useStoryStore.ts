@@ -123,6 +123,7 @@ interface StoryState {
   // Workflow actions
   loadFromRunFolder: () => Promise<void>;
   generateProceduralLayout: () => void;   // ← tạo layout từ config, không cần run folder
+  randomizePageLayout: (pageId: string) => void; // ← tạo lại layout ngẫu nhiên cho 1 trang cụ thể
   generateAllScripts: () => Promise<void>; // ← tạo kịch bản mock cho từng panel
   generateAllImages: () => Promise<void>;
 
@@ -378,69 +379,26 @@ export const useStoryStore = create<StoryState>((set, get) => ({
     type Recipe = { h: number; p: number[] }[];
 
     const RECIPES: Record<number, Recipe[]> = {
-      1: [
-        [{ h: 1, p: [1] }],
-      ],
-      2: [
-        [{ h: 1, p: [1] }, { h: 1, p: [1] }],          // ngang + ngang
-        [{ h: 1, p: [1, 1] }],                           // vuông + vuông
-        [{ h: 1.5, p: [1] }, { h: 1, p: [1] }],         // ngang lớn + ngang nhỏ
-      ],
-      3: [
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }],      // ngang + 2 vuông
-        [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }],      // 2 vuông + ngang
-        [{ h: 1, p: [1, 1, 1] }],                        // 3 dọc
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }],    // ngang + 2 không đều
-      ],
-      4: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],                  // 2×2 vuông
-        [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }],                // ngang + 3 dọc
-        [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }],                // 3 dọc + ngang
-        [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }],            // 2 bất đối xứng × 2
-      ],
-      5: [
-        [{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],   // ngang + 2×2
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }],                   // 2 vuông + 3 dọc
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }],                   // 3 dọc + 2 vuông
-        [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }], // ngang + 2 đảo chiều
-      ],
-      6: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],            // 2×3 dọc
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],  // 3×2 vuông
-        [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], // ngang+2+3
-        [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }],   // 3+ngang+2
-      ],
-      7: [
-        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],  // ngang+3+3
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }],    // 2+3+2
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }], // 3+2+2
-      ],
-      8: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], // 4×2
-        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], // ngang+3+2+2
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], // 2+3+3
-        [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }], // kiểu Thánh Gióng
-      ],
+      1: [[{ h: 1, p: [1] }]],
+      2: [[{ h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1] }]],
+      3: [[{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }], [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }]],
+      4: [[{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }], [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }]],
+      5: [[{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }]],
+      6: [[{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }]],
+      7: [[{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }]],
+      8: [[{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }]],
     };
 
-    // Tìm recipe gần nhất nếu không có exact match
     const getRecipes = (n: number): Recipe[] => {
       if (RECIPES[n]) return RECIPES[n];
       const keys = Object.keys(RECIPES).map(Number).sort((a, b) => Math.abs(a - n) - Math.abs(b - n));
       return RECIPES[keys[0]];
     };
 
-    const pages: PageData[] = [];
-
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      const recipes = getRecipes(panelsPerPage);
-      // Xoay vòng templates qua các trang để có sự đa dạng
-      const recipe = recipes[(pageNum - 1) % recipes.length];
-
+    const buildPanelsForRecipe = (recipe: Recipe, pageNum: number, panelsPerPage: number): PanelData[] => {
       const totalHWeight = recipe.reduce((s, r) => s + r.h, 0);
       const availH = PAGE_H - PAD * 2 - GAP * (recipe.length - 1);
       const availW = PAGE_W - PAD * 2;
-
       const panels: PanelData[] = [];
       let panelIdx = 0;
       let curY = PAD;
@@ -453,10 +411,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
         for (let pi = 0; pi < row.p.length; pi++) {
           const isLastInRow = pi === row.p.length - 1;
-          const panelW = isLastInRow
-            ? PAGE_W - PAD - curX
-            : Math.round((row.p[pi] / totalWWeight) * availW);
-
+          const panelW = isLastInRow ? PAGE_W - PAD - curX : Math.round((row.p[pi] / totalWWeight) * availW);
           const panelId = `page_${String(pageNum).padStart(3,'0')}_panel_${String(panelIdx + 1).padStart(2,'0')}`;
           const ratio = panelW / rowH;
           const shapeLabel = ratio >= 1.4 ? '16:9' : ratio <= 0.8 ? '9:16' : '1:1';
@@ -475,13 +430,20 @@ export const useStoryStore = create<StoryState>((set, get) => ({
             frame: { x: curX, y: curY, width: panelW, height: rowH },
             image_transform: { x: 0, y: 0, scale: 1 },
           });
-
           curX += panelW + GAP;
           panelIdx++;
         }
         curY += rowH + GAP;
       }
+      return panels;
+    };
 
+    const pages: PageData[] = [];
+
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      const recipes = getRecipes(panelsPerPage);
+      const recipe = recipes[(pageNum - 1) % recipes.length];
+      const panels = buildPanelsForRecipe(recipe, pageNum, panelsPerPage);
       pages.push({ id: `page_${pageNum}`, pageNumber: pageNum, panels });
     }
 
@@ -492,6 +454,89 @@ export const useStoryStore = create<StoryState>((set, get) => ({
       selectedPanelId: null,
       loadError: null,
     });
+  },
+
+  randomizePageLayout: (pageId: string) => {
+    const { pages, config } = get();
+    const { panelsPerPage, aspectRatio } = config;
+    
+    // We need the recipes logic again
+    type Recipe = { h: number; p: number[] }[];
+    const RECIPES: Record<number, Recipe[]> = {
+      1: [[{ h: 1, p: [1] }]],
+      2: [[{ h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1] }]],
+      3: [[{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }], [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }]],
+      4: [[{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }], [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }]],
+      5: [[{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }]],
+      6: [[{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }]],
+      7: [[{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }]],
+      8: [[{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }]],
+    };
+    const getRecipes = (n: number): Recipe[] => {
+      if (RECIPES[n]) return RECIPES[n];
+      const keys = Object.keys(RECIPES).map(Number).sort((a, b) => Math.abs(a - n) - Math.abs(b - n));
+      return RECIPES[keys[0]];
+    };
+
+    const targetPage = pages.find(p => p.id === pageId);
+    if (!targetPage) return;
+
+    const recipes = getRecipes(panelsPerPage);
+    // Pick a random recipe
+    const recipe = recipes[Math.floor(Math.random() * recipes.length)];
+
+    const PAGE_W = 750;
+    const [rW, rH] = aspectRatio.split(':').map(Number);
+    const PAGE_H = Math.round(PAGE_W * (rH / rW));
+    const PAD = 10;
+    const GAP = 8;
+
+    const totalHWeight = recipe.reduce((s, r) => s + r.h, 0);
+    const availH = PAGE_H - PAD * 2 - GAP * (recipe.length - 1);
+    const availW = PAGE_W - PAD * 2;
+    const panels: PanelData[] = [];
+    let panelIdx = 0;
+    let curY = PAD;
+
+    for (let ri = 0; ri < recipe.length; ri++) {
+      const row = recipe[ri];
+      const rowH = Math.round((row.h / totalHWeight) * availH);
+      const totalWWeight = row.p.reduce((s, w) => s + w, 0);
+      let curX = PAD;
+
+      for (let pi = 0; pi < row.p.length; pi++) {
+        const isLastInRow = pi === row.p.length - 1;
+        const panelW = isLastInRow ? PAGE_W - PAD - curX : Math.round((row.p[pi] / totalWWeight) * availW);
+        const panelId = `page_${String(targetPage.pageNumber).padStart(3,'0')}_panel_${String(panelIdx + 1).padStart(2,'0')}`;
+        const ratio = panelW / rowH;
+        const shapeLabel = ratio >= 1.4 ? '16:9' : ratio <= 0.8 ? '9:16' : '1:1';
+
+        // Keep old script and characters if they exist
+        const oldPanel = targetPage.panels[panelIdx];
+
+        panels.push({
+          id: panelId,
+          pageId: `page_${targetPage.pageNumber}`,
+          globalOrder: (targetPage.pageNumber - 1) * panelsPerPage + panelIdx + 1,
+          pageOrder: panelIdx + 1,
+          file_name: `${panelId}.jpg`,
+          aspect_label: shapeLabel,
+          image_url: oldPanel?.image_url || '',
+          script: oldPanel?.script || { narration: '', dialogues: [], ai_prompt: '' },
+          characters: oldPanel?.characters || [],
+          status: oldPanel?.status || 'empty',
+          frame: { x: curX, y: curY, width: panelW, height: rowH },
+          image_transform: oldPanel?.image_transform || { x: 0, y: 0, scale: 1 },
+        });
+        curX += panelW + GAP;
+        panelIdx++;
+      }
+      curY += rowH + GAP;
+    }
+
+    set(s => ({
+      pages: s.pages.map(p => p.id === pageId ? { ...p, panels } : p)
+    }));
   },
 
   // ════════════════════════════════════════════════════════════════════════
