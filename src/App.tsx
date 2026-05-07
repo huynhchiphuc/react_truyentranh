@@ -24,7 +24,11 @@ const StepperHeader: React.FC = () => {
   const currentIdx = STEPS.findIndex(s => s.id === step);
 
   const goBack = () => {
-    if (currentIdx > 0) setStep(STEPS[currentIdx - 1].id);
+    if (step === 'result') {
+      setStep('layout');
+    } else if (currentIdx > 0) {
+      setStep(STEPS[currentIdx - 1].id);
+    }
   };
 
   return (
@@ -61,7 +65,7 @@ const StepperHeader: React.FC = () => {
             const Icon = s.icon;
             const isActive = s.id === step;
             const isDone = idx < currentIdx;
-            const isClickable = isDone;
+            const isClickable = isDone && s.id !== 'generating';
 
             return (
               <React.Fragment key={s.id}>
