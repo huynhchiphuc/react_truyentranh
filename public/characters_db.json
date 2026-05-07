@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "description": "CSDL nhân vật truyện tranh – dùng để tái sử dụng ảnh thay vì sinh mới",
+  "characters": [
+    {
+      "id": "giong",
+      "name": "Gióng",
+      "aliases": ["Thánh Gióng", "Phù Đổng Thiên Vương", "Phù Đổng", "thanh giong", "giong"],
+      "image_path": "run_20260417_1621_39b2de80/chars_output/giong.png",
+      "description": "Người anh hùng huyền thoại sinh ra ở làng Phù Đổng, lớn nhanh như thổi để đánh giặc Ân",
+      "role": "protagonist",
+      "tags": ["cổ tích", "anh hùng", "việt nam", "thần thoại"],
+      "story": "Thánh Gióng",
+      "gender": "male",
+      "style_prompt": "Vietnamese hero boy, ancient Vietnamese armor, strong, determined expression"
+    },
+    {
+      "id": "me-giong",
+      "name": "Mẹ Gióng",
+      "aliases": ["Mẹ của Gióng", "bà mẹ Gióng", "me giong"],
+      "image_path": "run_20260417_1621_39b2de80/chars_output/me-giong.png",
+      "description": "Người mẹ hiền lành, chịu thương chịu khó, mẹ của Thánh Gióng",
+      "role": "supporting",
+      "tags": ["cổ tích", "mẹ", "việt nam"],
+      "story": "Thánh Gióng",
+      "gender": "female",
+      "style_prompt": "Vietnamese elderly woman, traditional áo dài, kind expression, village setting"
+    },
+    {
+      "id": "hung-vuong",
+      "name": "Hùng Vương",
+      "aliases": ["Vua Hùng", "Hùng Vương thứ 6", "hung vuong", "vua hung"],
+      "image_path": "run_20260417_1621_39b2de80/chars_output/hung-vuong.png",
+      "description": "Vị vua của nước Văn Lang, cai trị đất nước trong thời đại Hùng Vương",
+      "role": "supporting",
+      "tags": ["cổ tích", "vua", "việt nam", "lịch sử"],
+      "story": "Thánh Gióng",
+      "gender": "male",
+      "style_prompt": "Ancient Vietnamese king, royal robes, crown, wise expression, royal palace"
+    },
+    {
+      "id": "an-vuong",
+      "name": "Ân Vương",
+      "aliases": ["Giặc Ân", "vua Ân", "an vuong", "giac an"],
+      "image_path": "run_20260417_1621_39b2de80/chars_output/an-vuong.png",
+      "description": "Vị vua nước Ân hung hãn, kẻ thù của người Việt",
+      "role": "antagonist",
+      "tags": ["cổ tích", "phản diện", "giặc ngoại xâm"],
+      "story": "Thánh Gióng",
+      "gender": "male",
+      "style_prompt": "Ancient Chinese warlord, menacing armor, aggressive expression, army commander"
+    },
+    {
+      "id": "su-gia",
+      "name": "Sứ giả",
+      "aliases": ["su gia", "sứ giả nhà vua", "royal messenger"],
+      "image_path": "run_20260417_1621_39b2de80/chars_output/su-gia.png",
+      "description": "Sứ giả của Hùng Vương đi tìm người tài giỏi đánh giặc",
+      "role": "supporting",
+      "tags": ["cổ tích", "sứ giả", "việt nam"],
+      "story": "Thánh Gióng",
+      "gender": "male",
+      "style_prompt": "Ancient Vietnamese messenger, official robes, scroll in hand, traveling pose"
+    },
+    {
+      "id": "son-tinh",
+      "name": "Sơn Tinh",
+      "aliases": ["Thần Núi", "son tinh", "than nui"],
+      "image_path": null,
+      "description": "Thần cai quản núi non, tài năng phi thường, vợ là Mỵ Nương",
+      "role": "protagonist",
+      "tags": ["cổ tích", "thần thoại", "việt nam", "thần linh"],
+      "story": "Sơn Tinh Thủy Tinh",
+      "gender": "male",
+      "style_prompt": "Vietnamese mountain deity, ancient robes with mountain motifs, powerful build, calm expression"
+    },
+    {
+      "id": "thuy-tinh",
+      "name": "Thủy Tinh",
+      "aliases": ["Thần Nước", "thuy tinh", "than nuoc"],
+      "image_path": null,
+      "description": "Thần cai quản sông biển, hay gây lũ lụt để tranh giành Mỵ Nương",
+      "role": "antagonist",
+      "tags": ["cổ tích", "thần thoại", "việt nam", "thần linh"],
+      "story": "Sơn Tinh Thủy Tinh",
+      "gender": "male",
+      "style_prompt": "Vietnamese water deity, flowing robes with wave patterns, trident, intense expression"
+    },
+    {
+      "id": "my-nuong",
+      "name": "Mỵ Nương",
+      "aliases": ["công chúa Mỵ Nương", "my nuong", "cong chua"],
+      "image_path": null,
+      "description": "Công chúa xinh đẹp con của Hùng Vương, người mà cả Sơn Tinh lẫn Thủy Tinh yêu mến",
+      "role": "supporting",
+      "tags": ["cổ tích", "công chúa", "việt nam"],
+      "story": "Sơn Tinh Thủy Tinh",
+      "gender": "female",
+      "style_prompt": "Beautiful Vietnamese princess, traditional dress, gentle expression, royal setting"
+    },
+    {
+      "id": "tam",
+      "name": "Tấm",
+      "aliases": ["co Tam", "cô Tấm", "tam"],
+      "image_path": null,
+      "description": "Cô gái hiền lành, chăm chỉ, bị mẹ kế và em gái đối xử tàn tệ",
+      "role": "protagonist",
+      "tags": ["cổ tích", "việt nam", "nhân vật chính"],
+      "story": "Tấm Cám",
+      "gender": "female",
+      "style_prompt": "Young Vietnamese girl, simple traditional clothing, kind expression, village setting"
+    },
+    {
+      "id": "cam",
+      "name": "Cám",
+      "aliases": ["cam", "chi cam", "chị Cám"],
+      "image_path": null,
+      "description": "Em gái cùng cha khác mẹ của Tấm, hay ghen ghét và đố kỵ",
+      "role": "antagonist",
+      "tags": ["cổ tích", "việt nam", "phản diện"],
+      "story": "Tấm Cám",
+      "gender": "female",
+      "style_prompt": "Young Vietnamese girl, jealous expression, slightly elaborate clothing, village setting"
+    },
+    {
+      "id": "lac-long-quan",
+      "name": "Lạc Long Quân",
+      "aliases": ["lac long quan", "Rồng", "thần rồng"],
+      "image_path": null,
+      "description": "Vị vua thần rồng, tổ tiên của người Việt, chồng của Âu Cơ",
+      "role": "protagonist",
+      "tags": ["thần thoại", "việt nam", "tổ tiên", "rồng"],
+      "story": "Con Rồng Cháu Tiên",
+      "gender": "male",
+      "style_prompt": "Ancient Vietnamese dragon king, majestic robes with dragon patterns, powerful appearance"
+    },
+    {
+      "id": "au-co",
+      "name": "Âu Cơ",
+      "aliases": ["au co", "tiên nữ", "thần tiên"],
+      "image_path": null,
+      "description": "Tiên nữ xinh đẹp, vợ của Lạc Long Quân, mẹ của trăm con",
+      "role": "protagonist",
+      "tags": ["thần thoại", "việt nam", "tổ tiên", "tiên"],
+      "story": "Con Rồng Cháu Tiên",
+      "gender": "female",
+      "style_prompt": "Beautiful Vietnamese fairy goddess, flowing celestial robes, ethereal appearance"
+    }
+  ]
+}

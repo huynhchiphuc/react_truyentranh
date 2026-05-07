@@ -1,0 +1,35 @@
+{
+  "_comment": "File này được Python pipeline tự động cập nhật mỗi khi tạo run mới. Đừng sửa tay!",
+  "runs": [
+    {
+      "id": "run_20260417_1537_87ae7fc1",
+      "created_at": "2026-04-17T15:37:00",
+      "title": "Thánh Gióng (v1)",
+      "description": "Truyện cổ tích Thánh Gióng Việt Nam",
+      "total_pages": 3,
+      "panels_per_page": 8,
+      "has_ai_output": true,
+      "data_file": "panels_with_prompts.json"
+    },
+    {
+      "id": "run_20260417_1621_39b2de80",
+      "created_at": "2026-04-17T16:21:00",
+      "title": "Thánh Gióng (v2)",
+      "description": "Truyện cổ tích Thánh Gióng – có ảnh AI đầy đủ",
+      "total_pages": 3,
+      "panels_per_page": 8,
+      "has_ai_output": true,
+      "data_file": "panels_with_prompts.json"
+    },
+    {
+      "id": "run_20260419_1713_5e82fa16",
+      "created_at": "2026-04-19T17:13:00",
+      "title": "Run mới nhất",
+      "description": "Chưa có mô tả",
+      "total_pages": 0,
+      "panels_per_page": 0,
+      "has_ai_output": false,
+      "data_file": "pages_with_prompts.json"
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "characters": [
+    {
+      "name": "Gióng - Phiên bản Trẻ",
+      "slug": "giong-tre",
+      "description": "Một cậu bé khoảng 3 tuổi, có thân hình bụ bẫm, đôi má phúng phính và làn da trắng hồng. Cậu có mái tóc đen mềm mượt, thường được búi lại gọn gàng. Gióng có ánh mắt to tròn, tinh nghịch nhưng lại rất trầm tĩnh và ý chí. Ở giai đoạn này, Gióng vẫn chưa nói năng và chỉ biết ăn ngủ."
+    },
+    {
+      "name": "Gióng - Phiên bản Thanh Niên",
+      "slug": "giong-thanh-nien",
+      "description": "Gióng trở thành một cậu thanh niên cao lớn, vạm vỡ với sức mạnh phi thường. Cậu có cơ bắp cuồn cuộn và chiều cao vượt trội, khoảng hai trượng. Gióng có làn da nâu rám nắng, mái tóc dài, đen và thường được buộc lại thành từng bím. Khuôn mặt cậu hiện lên sự dũng mãnh, với đôi lông mày rậm và ánh mắt mạnh mẽ, toát lên khí chất của một vị anh hùng. Trong lần xuất trận, Gióng mặc áo giáp sắt khổ lớn, đội nón sắt và cầm trong tay thanh gươm sắt sáng loáng."
+    },
+    {
+      "name": "Mẹ Gióng",
+      "slug": "me-giong",
+      "description": "Một người phụ nữ trung niên, có vẻ ngoài hiền lành và phúc hậu. Bà có làn da sáng với mái tóc đen dài, thường chải gọn gàng và buộc lên. Khuôn mặt bà hiền từ, đôi mắt dịu dàng với nụ cười luôn thường trực. Bà mặc áo trắng đơn giản, thêm chiếc khăn quàng đầu bằng vải lụa, biểu tượng cho những người mẹ Việt Nam tần tảo nuôi con."
+    },
+    {
+      "name": "Hùng Vương",
+      "slug": "hung-vuong",
+      "description": "Một vị vua quyền lực với dáng vẻ trí thức và tôn nghiêm. Hùng Vương có thân hình cao lớn, khuôn mặt nghiêm nghị, đôi mắt sắc sảo nhưng vẫn có nét vị tha. Ông luôn mặc áo vua bằng lụa quý, có thêu hình rồng phượng, và đội mũ vàng đặc trưng của hoàng gia. Bộ giáp bằng vàng sáng láng tượng trưng cho quyền uy của ông."
+    },
+    {
+      "name": "Ân Vương",
+      "slug": "an-vuong",
+      "description": "Một người đàn ông cao lớn, vẻ ngoài hung dữ với làn da ngăm đen và gương mặt dữ tợn. Ân Vương có tóc dài rối bù và thường mặc áo giáp dày, kim loại tối màu. Áo giáp của ông được trang trí bằng những họa tiết uốn lượn, mang lại cảm giác lạnh lẽo và đáng sợ. Đôi mắt của ông có ánh nhìn độc ác, luôn biểu lộ sự tàn nhẫn."
+    },
+    {
+      "name": "Sứ Giả",
+      "slug": "su-gia",
+      "description": "Một người đàn ông trung niên, có vẻ ngoài trang nghiêm và nhanh nhẹn. Sứ giả mặc trang phục đơn giản nhưng khéo léo, có biểu tượng của nhà vua. Ông có làn da sáng và tuổi tác thể hiện qua những nếp nhăn trên khuôn mặt. Mái tóc của sứ giả trắng dần theo thời gian, nhưng vẫn giữ được sự mượt mà, và đôi mắt sáng của ông toát lên sự thông minh, mãnh liệt."
+    },
+    {
+      "name": "Dân Làng",
+      "slug": "dan-lang",
+      "description": "Nhân vật phụ này gồm có nhiều người với ngoại hình đa dạng. Họ đều mặc trang phục nông dân, thường là áo bà ba hoặc váy truyền thống Việt Nam, với màu sắc đất và sức sống quê hương. Nụ cười và ánh mắt của họ mang đậm tình thân ái, thể hiện sự đoàn kết và niềm tự hào của người dân trong cuộc chiến giữ nước."
+    }
+  ],
+  "pages": [
+    {
+      "p_num": 1
+    },
+    {
+      "p_num": 2
+    },
+    {
+      "p_num": 3
+    }
+  ],
+  "panels": [
+    {
+      "page_order": 1,
+      "characters_raw": [
+        "Mẹ Gióng"
+      ],
+      "description": "Toàn cảnh một cánh đồng xanh tươi vào buổi sáng, ánh nắng chiếu rọi. Một người phụ nữ trung niên (Mẹ Gióng) đi giữa cánh đồng, bỗng dừng lại khi nhìn thấy một dấu chân khổng lồ.",
+      "narration": "Vào thời Hùng Vương, có một người phụ nữ sống một mình, mơ ước có một đứa con.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi bàn chân ai mà to thế này!"
+        }
+      ]
+    },
+    {
+      "page_order": 2,
+      "characters_raw": [
+        "Mẹ Gióng"
+      ],
+      "description": "Gần hơn, foc vào gương mặt rặn rỗi của Mẹ Gióng. Mẹ Gióng cảm thấy hồi hộp khi đứng bên cạnh dấu chân.",
+      "narration": "Bà không biết rằng dấu chân đó sẽ thay đổi cuộc đời mình.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Nếu như mình ướm thử thì sao nhỉ?"
+        }
+      ]
+    },
+    {
+      "page_order": 3,
+      "characters_raw": [
+        "Mẹ Gióng"
+      ],
+      "description": "Bà nhìn vào mặt đất, bàn chân khổng lồ hiện ra. Bà ướm thử chân mình vào dấu chân kỳ lạ, sau đó vội vã trở về.",
+      "narration": "Sau đó, bà có mang và chào đón một đứa trẻ bụ bẫm.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Cuối cùng, mẹ cũng có con rồi!"
+        }
+      ]
+    },
+    {
+      "page_order": 4,
+      "characters_raw": [
+        "Gióng - Phiên bản Trẻ",
+        "Mẹ Gióng"
+      ],
+      "description": "Trong nhà, nơi Gióng đang nằm trong nôi, xung quanh bừa bộn. Cậu bé Gióng nằm ngửa, không nói được gì, chỉ ăn và ngủ.",
+      "narration": "Thời gian trôi qua, Gióng vẫn không biết lẫy, biết nói, chỉ biết ngắm nhìn thế giới.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ơi, con sẽ lớn lên như thế nào nhỉ?"
+        }
+      ]
+    },
+    {
+      "page_order": 5,
+      "characters_raw": [
+        "Dân Làng"
+      ],
+      "description": "Cảnh làng quê yên bình, bỗng xảy ra cảnh báo khẩn cấp. Dân làng hoảng loạn khi nghe tin giặc Ân xâm lược.",
+      "narration": "Giặc Ân hung tàn, tàn phá mọi nơi chúng đi qua.",
+      "dialogue": [
+        {
+          "character": "Dân Làng 1",
+          "text": "Giặc đến rồi, chúng ta phải làm gì đây?"
+        }
+      ]
+    },
+    {
+      "page_order": 6,
+      "characters_raw": [
+        "Hùng Vương",
+        "Sứ Giả"
+      ],
+      "description": "Cảnh Hùng Vương trong cung điện, khuôn mặt đầy lo lắng. Hùng Vương ra lệnh cho sứ giả tìm tướng tài.",
+      "narration": "Vua Hùng quyết tâm tìm người góp sức cứu nước.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Ta cần người tài trợ giúp, hãy đi tìm khắp nơi!"
+        }
+      ]
+    },
+    {
+      "page_order": 7,
+      "characters_raw": [
+        "Sứ Giả",
+        "Dân Làng"
+      ],
+      "description": "Sứ giả đi vào làng Gióng, trời nắng gắt. Sứ giả hỏi thăm người dân về các tướng tài.",
+      "narration": "Sứ giả đi khắp nơi và nghe được câu chuyện về Gióng.",
+      "dialogue": [
+        {
+          "character": "Sứ Giả",
+          "text": "Có ai thấy tướng tài nào không? Ta nguyện được giúp quốc gia."
+        }
+      ]
+    },
+    {
+      "page_order": 8,
+      "characters_raw": [
+        "Gióng - Phiên bản Trẻ",
+        "Mẹ Gióng"
+      ],
+      "description": "Mẹ Gióng đang ru ngủ cho Gióng, khuôn mặt hiền từ. Mẹ Gióng đùa rằng đứa con chậm lớn sẽ không tham gia đánh giặc.",
+      "narration": "Một điều kỳ diệu xảy ra khi Gióng mở miệng.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Mẹ, cho gọi sứ giả vào đây cho con!"
+        }
+      ]
+    },
+    {
+      "page_order": 9,
+      "characters_raw": [
+        "Gióng - Phiên bản Trẻ",
+        "Sứ Giả"
+      ],
+      "description": "Sứ giả bước vào nhà Gióng, ngạc nhiên. Cậu bé Gióng nói với sứ giả về nguyện vọng của mình.",
+      "narration": "Câu nói đầu tiên của Gióng đã khiến mọi người choáng váng.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Về bảo nhà Vua rèn cho ta một con ngựa sắt và một thanh gươm sắt!"
+        }
+      ]
+    },
+    {
+      "page_order": 10,
+      "characters_raw": [
+        "Sứ Giả"
+      ],
+      "description": "Cận cảnh gương mặt sứ giả, đầy sự kinh ngạc và tôn trọng. Sứ giả lập tức ra đi, mang thông điệp của Gióng.",
+      "narration": "Hùng Vương nghe tin mừng vội vã ra lệnh cho thợ rèn.",
+      "dialogue": [
+        {
+          "character": "Sứ Giả",
+          "text": "Đứa trẻ này có ý chí thần thánh!"
+        }
+      ]
+    },
+    {
+      "page_order": 11,
+      "characters_raw": [
+        "Thợ Rèn"
+      ],
+      "description": "Các thợ rèn bận rộn ở xưởng rèn, nước trong lò bùng cháy. Thợ rèn cố gắng tạo ra trang bị cho Gióng.",
+      "narration": "Các thợ rèn làm việc cật lực, nhưng vật phẩm quá nặng.",
+      "dialogue": [
+        {
+          "character": "Thợ Rèn 1",
+          "text": "Không thể nào mang nổi những đồ này đi!"
+        }
+      ]
+    },
+    {
+      "page_order": 12,
+      "characters_raw": [
+        "Mẹ Gióng"
+      ],
+      "description": "Cảnh Mẹ Gióng lo lắng chạy về nhà. Bà lo lắng cho sự xuất hiện của quân đội.",
+      "narration": "Mẹ Gióng thấy quân sĩ kéo đến, lo sợ cho con trai mình.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ơi, chuyện này không phải chuyện vui đâu!"
+        }
+      ]
+    },
+    {
+      "page_order": 13,
+      "characters_raw": [
+        "Gióng - Phiên bản Thanh Niên"
+      ],
+      "description": "Gióng đứng dậy, mặt đầy quyết tâm. Gióng yêu cầu mẹ cho mình ăn thật nhiều.",
+      "narration": "Cậu quyết tâm lớn nhanh để ra trận.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Mẹ hãy thổi thật nhiều cơm cho con, con cần sức mạnh!"
+        }
+      ]
+    },
+    {
+      "page_order": 14,
+      "characters_raw": [
+        "Mẹ Gióng"
+      ],
+      "description": "Bà mẹ nấu cơm tối, Gióng ăn liên tục. Mỗi nồi cơm Gióng ăn đều lớn nhanh hơn.",
+      "narration": "Nhờ ăn uống, Gióng lớn lên nhanh chóng.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi con ăn nhanh quá, mẹ không đủ gạo rồi!"
+        }
+      ]
+    },
+    {
+      "page_order": 15,
+      "characters_raw": [
+        "Dân Làng"
+      ],
+      "description": "Cảnh bà mẹ kêu gọi dân làng cùng ngày. Người dân tụ tập mang thức ăn đến cho Gióng.",
+      "narration": "Toàn làng chung sức ủng hộ Gióng.",
+      "dialogue": [
+        {
+          "character": "Dân Làng 2",
+          "text": "Chúng ta cùng nhau giúp Gióng nào!"
+        }
+      ]
+    },
+    {
+      "page_order": 16,
+      "characters_raw": [
+        "Gióng - Phiên bản Thanh Niên"
+      ],
+      "description": "Gióng cầm thanh gươm trong tay, đứng ở giữa sân. Gióng vươn vai một cách mạnh mẽ, mặc đồng phục chiến đấu.",
+      "narration": "Gióng đã trở thành một thanh niên dũng mãnh, sẵn sàng ra trận.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Ta là tướng nhà Trời! Cùng ta đánh giặc nào!"
+        }
+      ]
+    },
+    {
+      "page_order": 17,
+      "characters_raw": [
+        "Gióng - Phiên bản Thanh Niên"
+      ],
+      "description": "Ngựa sắt nhảy lên, môi trường xung quanh bắt đầu nóng dần. Gióng hí hửng cưỡi trên lưng ngựa sắt, phun lửa.",
+      "narration": "Chưa bao giờ có một đứa trẻ nào mạnh mẽ đến vậy.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Nghe đây! Giặc hãy chờ ta!"
+        }
+      ]
+    },
+    {
+      "page_order": 18,
+      "characters_raw": [
+        "Gióng - Phiên bản Thanh Niên",
+        "Ân Vương"
+      ],
+      "description": "Cảnh bùng nổ, lửa cháy và tiếng thét của giặc. Gióng chiến đấu dũng mãnh, đánh bại quân giặc và cuối cùng bay lên trời.",
+      "narration": "Gióng biến mất vào mây trời sau khi chiến thắng, để lại sau lưng một huyền thoại.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Chúng ta sẽ lập đền thờ để vinh danh Thánh Gióng!"
+        }
+      ]
+    }
+  ]
+}

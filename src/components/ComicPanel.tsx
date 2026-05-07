@@ -27,6 +27,10 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth
   const isDraggingImg = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const [imgOffset, setImgOffset] = useState({ x: 0, y: 0 });
+  const [imgFailed, setImgFailed] = useState(false);
+
+  // Reset imgFailed khi image_url thay đổi (e.g. switch run folder)
+  React.useEffect(() => { setImgFailed(false); }, [panel?.image_url]);
 
   const handleImgMouseDown = useCallback((e: React.MouseEvent) => {
     if (!isResult) return;
@@ -120,7 +124,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth
         onWheel={handleWheel}
       >
         {/* ── Has image ─────────────────────────────────────────────────── */}
-        {panel.image_url && (
+        {panel.image_url && !imgFailed && (
           <img
             src={panel.image_url}
             alt={panel.file_name}
@@ -131,6 +135,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth
               transformOrigin: 'center',
             }}
             draggable={false}
+            onError={() => setImgFailed(true)}
           />
         )}
 
@@ -143,7 +148,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, pageCanvasWidth
         )}
 
         {/* ── Empty placeholder ──────────────────────────────────────────── */}
-        {!panel.image_url && !isThisGenerating && (
+        {(!panel.image_url || imgFailed) && !isThisGenerating && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-slate-400 select-none">
             {panel.status === 'scripted' ? (
               <>

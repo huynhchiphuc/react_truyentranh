@@ -1,0 +1,449 @@
+{
+  "meta": {
+    "total_pages": 3,
+    "panels_per_page": 6,
+    "total_panels": 18,
+    "page_aspect": "9:16",
+    "coord_w": 1000.0,
+    "coord_h": 1777.7777777777778,
+    "generated_at": "2026-04-17T15:37:37"
+  },
+  "panels": [
+    {
+      "panel_id": "page_001_panel_01",
+      "file_name": "page_001_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 496.4643,
+        "h": 600.4604
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh một cánh đồng xanh tươi vào buổi sáng, ánh nắng chiếu rọi. Một người phụ nữ trung niên (Mẹ Gióng) đi giữa cánh đồng, bỗng dừng lại khi nhìn thấy một dấu chân khổng lồ.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Vào thời Hùng Vương, có một người phụ nữ sống một mình, mơ ước có một đứa con.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi bàn chân ai mà to thế này!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 1,
+      "narration": "Vào thời Hùng Vương, có một người phụ nữ sống một mình, mơ ước có một đứa con.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi bàn chân ai mà to thế này!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_02",
+      "file_name": "page_001_panel_02.jpg",
+      "bbox": {
+        "x": 510.4643,
+        "y": 4.0,
+        "w": 485.5357,
+        "h": 600.4604
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gần hơn, foc vào gương mặt rặn rỗi của Mẹ Gióng. Mẹ Gióng cảm thấy hồi hộp khi đứng bên cạnh dấu chân.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Bà không biết rằng dấu chân đó sẽ thay đổi cuộc đời mình.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Nếu như mình ướm thử thì sao nhỉ?",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 2,
+      "narration": "Bà không biết rằng dấu chân đó sẽ thay đổi cuộc đời mình.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Nếu như mình ướm thử thì sao nhỉ?"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_03",
+      "file_name": "page_001_panel_03.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 614.4604,
+        "w": 491.9004,
+        "h": 586.4649
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Bà nhìn vào mặt đất, bàn chân khổng lồ hiện ra. Bà ướm thử chân mình vào dấu chân kỳ lạ, sau đó vội vã trở về.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Sau đó, bà có mang và chào đón một đứa trẻ bụ bẫm.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Cuối cùng, mẹ cũng có con rồi!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 3,
+      "narration": "Sau đó, bà có mang và chào đón một đứa trẻ bụ bẫm.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Cuối cùng, mẹ cũng có con rồi!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_04",
+      "file_name": "page_001_panel_04.jpg",
+      "bbox": {
+        "x": 505.9004,
+        "y": 614.4604,
+        "w": 490.0996,
+        "h": 586.4649
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Trẻ, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Trong nhà, nơi Gióng đang nằm trong nôi, xung quanh bừa bộn. Cậu bé Gióng nằm ngửa, không nói được gì, chỉ ăn và ngủ.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Thời gian trôi qua, Gióng vẫn không biết lẫy, biết nói, chỉ biết ngắm nhìn thế giới.\nCHARACTERS IN SCENE: Gióng - Phiên bản Trẻ , Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con ơi, con sẽ lớn lên như thế nào nhỉ?",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-tre.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 1,
+      "page_order": 4,
+      "narration": "Thời gian trôi qua, Gióng vẫn không biết lẫy, biết nói, chỉ biết ngắm nhìn thế giới.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ơi, con sẽ lớn lên như thế nào nhỉ?"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_05",
+      "file_name": "page_001_panel_05.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1210.9252,
+        "w": 487.4258,
+        "h": 562.8526
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Dân Làng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cảnh làng quê yên bình, bỗng xảy ra cảnh báo khẩn cấp. Dân làng hoảng loạn khi nghe tin giặc Ân xâm lược.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Giặc Ân hung tàn, tàn phá mọi nơi chúng đi qua.\nCHARACTERS IN SCENE: Dân Làng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Dân Làng 1 EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Giặc đến rồi, chúng ta phải làm gì đây?",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\dan-lang.png"
+      ],
+      "page_number": 1,
+      "page_order": 5,
+      "narration": "Giặc Ân hung tàn, tàn phá mọi nơi chúng đi qua.",
+      "dialogue": [
+        {
+          "character": "Dân Làng 1",
+          "text": "Giặc đến rồi, chúng ta phải làm gì đây?"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_001_panel_06",
+      "file_name": "page_001_panel_06.jpg",
+      "bbox": {
+        "x": 501.4258,
+        "y": 1210.9252,
+        "w": 494.5742,
+        "h": 562.8526
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Hùng Vương, Sứ Giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cảnh Hùng Vương trong cung điện, khuôn mặt đầy lo lắng. Hùng Vương ra lệnh cho sứ giả tìm tướng tài.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Vua Hùng quyết tâm tìm người góp sức cứu nước.\nCHARACTERS IN SCENE: Hùng Vương , Sứ Giả\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Hùng Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ta cần người tài trợ giúp, hãy đi tìm khắp nơi!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\hung-vuong.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\su-gia.png"
+      ],
+      "page_number": 1,
+      "page_order": 6,
+      "narration": "Vua Hùng quyết tâm tìm người góp sức cứu nước.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Ta cần người tài trợ giúp, hãy đi tìm khắp nơi!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_01",
+      "file_name": "page_002_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 486.0889,
+        "h": 594.875
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Sứ Giả, Dân Làng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Sứ giả đi vào làng Gióng, trời nắng gắt. Sứ giả hỏi thăm người dân về các tướng tài.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Sứ giả đi khắp nơi và nghe được câu chuyện về Gióng.\nCHARACTERS IN SCENE: Sứ Giả , Dân Làng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Sứ Giả EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Có ai thấy tướng tài nào không? Ta nguyện được giúp quốc gia.",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\su-gia.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\dan-lang.png"
+      ],
+      "page_number": 2,
+      "page_order": 1,
+      "narration": "Sứ giả đi khắp nơi và nghe được câu chuyện về Gióng.",
+      "dialogue": [
+        {
+          "character": "Sứ Giả",
+          "text": "Có ai thấy tướng tài nào không? Ta nguyện được giúp quốc gia."
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_02",
+      "file_name": "page_002_panel_02.jpg",
+      "bbox": {
+        "x": 500.0889,
+        "y": 4.0,
+        "w": 495.9111,
+        "h": 594.875
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Trẻ, Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Mẹ Gióng đang ru ngủ cho Gióng, khuôn mặt hiền từ. Mẹ Gióng đùa rằng đứa con chậm lớn sẽ không tham gia đánh giặc.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Một điều kỳ diệu xảy ra khi Gióng mở miệng.\nCHARACTERS IN SCENE: Gióng - Phiên bản Trẻ , Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Mẹ, cho gọi sứ giả vào đây cho con!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-tre.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 2,
+      "narration": "Một điều kỳ diệu xảy ra khi Gióng mở miệng.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Mẹ, cho gọi sứ giả vào đây cho con!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_03",
+      "file_name": "page_002_panel_03.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 608.875,
+        "w": 495.9817,
+        "h": 583.25
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Trẻ, Sứ Giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Sứ giả bước vào nhà Gióng, ngạc nhiên. Cậu bé Gióng nói với sứ giả về nguyện vọng của mình.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Câu nói đầu tiên của Gióng đã khiến mọi người choáng váng.\nCHARACTERS IN SCENE: Gióng - Phiên bản Trẻ , Sứ Giả\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Về bảo nhà Vua rèn cho ta một con ngựa sắt và một thanh gươm sắt!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-tre.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\su-gia.png"
+      ],
+      "page_number": 2,
+      "page_order": 3,
+      "narration": "Câu nói đầu tiên của Gióng đã khiến mọi người choáng váng.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Về bảo nhà Vua rèn cho ta một con ngựa sắt và một thanh gươm sắt!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_04",
+      "file_name": "page_002_panel_04.jpg",
+      "bbox": {
+        "x": 509.9817,
+        "y": 608.875,
+        "w": 486.0183,
+        "h": 583.25
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Sứ Giả. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cận cảnh gương mặt sứ giả, đầy sự kinh ngạc và tôn trọng. Sứ giả lập tức ra đi, mang thông điệp của Gióng.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Hùng Vương nghe tin mừng vội vã ra lệnh cho thợ rèn.\nCHARACTERS IN SCENE: Sứ Giả\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Sứ Giả EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Đứa trẻ này có ý chí thần thánh!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\su-gia.png"
+      ],
+      "page_number": 2,
+      "page_order": 4,
+      "narration": "Hùng Vương nghe tin mừng vội vã ra lệnh cho thợ rèn.",
+      "dialogue": [
+        {
+          "character": "Sứ Giả",
+          "text": "Đứa trẻ này có ý chí thần thánh!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_05",
+      "file_name": "page_002_panel_05.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1202.125,
+        "w": 487.7626,
+        "h": 571.6527
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Các thợ rèn bận rộn ở xưởng rèn, nước trong lò bùng cháy. Thợ rèn cố gắng tạo ra trang bị cho Gióng.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Các thợ rèn làm việc cật lực, nhưng vật phẩm quá nặng.\nCHARACTERS IN SCENE: Thợ Rèn\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Thợ Rèn 1 EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Không thể nào mang nổi những đồ này đi!",
+      "ref_images": [],
+      "page_number": 2,
+      "page_order": 5,
+      "narration": "Các thợ rèn làm việc cật lực, nhưng vật phẩm quá nặng.",
+      "dialogue": [
+        {
+          "character": "Thợ Rèn 1",
+          "text": "Không thể nào mang nổi những đồ này đi!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_002_panel_06",
+      "file_name": "page_002_panel_06.jpg",
+      "bbox": {
+        "x": 501.7626,
+        "y": 1202.125,
+        "w": 494.2374,
+        "h": 571.6527
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cảnh Mẹ Gióng lo lắng chạy về nhà. Bà lo lắng cho sự xuất hiện của quân đội.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Mẹ Gióng thấy quân sĩ kéo đến, lo sợ cho con trai mình.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Con ơi, chuyện này không phải chuyện vui đâu!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 2,
+      "page_order": 6,
+      "narration": "Mẹ Gióng thấy quân sĩ kéo đến, lo sợ cho con trai mình.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Con ơi, chuyện này không phải chuyện vui đâu!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_01",
+      "file_name": "page_003_panel_01.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 4.0,
+        "w": 497.4068,
+        "h": 580.9299
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Thanh Niên. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng đứng dậy, mặt đầy quyết tâm. Gióng yêu cầu mẹ cho mình ăn thật nhiều.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Cậu quyết tâm lớn nhanh để ra trận.\nCHARACTERS IN SCENE: Gióng - Phiên bản Thanh Niên\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Mẹ hãy thổi thật nhiều cơm cho con, con cần sức mạnh!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-thanh-nien.png"
+      ],
+      "page_number": 3,
+      "page_order": 1,
+      "narration": "Cậu quyết tâm lớn nhanh để ra trận.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Mẹ hãy thổi thật nhiều cơm cho con, con cần sức mạnh!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_02",
+      "file_name": "page_003_panel_02.jpg",
+      "bbox": {
+        "x": 511.4068,
+        "y": 4.0,
+        "w": 484.5932,
+        "h": 580.9299
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Bà mẹ nấu cơm tối, Gióng ăn liên tục. Mỗi nồi cơm Gióng ăn đều lớn nhanh hơn.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Nhờ ăn uống, Gióng lớn lên nhanh chóng.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi con ăn nhanh quá, mẹ không đủ gạo rồi!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
+      ],
+      "page_number": 3,
+      "page_order": 2,
+      "narration": "Nhờ ăn uống, Gióng lớn lên nhanh chóng.",
+      "dialogue": [
+        {
+          "character": "Mẹ Gióng",
+          "text": "Ôi con ăn nhanh quá, mẹ không đủ gạo rồi!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_03",
+      "file_name": "page_003_panel_03.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 594.9299,
+        "w": 490.1823,
+        "h": 584.4416
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Dân Làng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cảnh bà mẹ kêu gọi dân làng cùng ngày. Người dân tụ tập mang thức ăn đến cho Gióng.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Toàn làng chung sức ủng hộ Gióng.\nCHARACTERS IN SCENE: Dân Làng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Dân Làng 2 EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Chúng ta cùng nhau giúp Gióng nào!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\dan-lang.png"
+      ],
+      "page_number": 3,
+      "page_order": 3,
+      "narration": "Toàn làng chung sức ủng hộ Gióng.",
+      "dialogue": [
+        {
+          "character": "Dân Làng 2",
+          "text": "Chúng ta cùng nhau giúp Gióng nào!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_04",
+      "file_name": "page_003_panel_04.jpg",
+      "bbox": {
+        "x": 504.1823,
+        "y": 594.9299,
+        "w": 491.8177,
+        "h": 584.4416
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Thanh Niên. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Gióng cầm thanh gươm trong tay, đứng ở giữa sân. Gióng vươn vai một cách mạnh mẽ, mặc đồng phục chiến đấu.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Gióng đã trở thành một thanh niên dũng mãnh, sẵn sàng ra trận.\nCHARACTERS IN SCENE: Gióng - Phiên bản Thanh Niên\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ta là tướng nhà Trời! Cùng ta đánh giặc nào!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-thanh-nien.png"
+      ],
+      "page_number": 3,
+      "page_order": 4,
+      "narration": "Gióng đã trở thành một thanh niên dũng mãnh, sẵn sàng ra trận.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Ta là tướng nhà Trời! Cùng ta đánh giặc nào!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_05",
+      "file_name": "page_003_panel_05.jpg",
+      "bbox": {
+        "x": 4.0,
+        "y": 1189.3715,
+        "w": 500.8143,
+        "h": 584.4063
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Thanh Niên. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Ngựa sắt nhảy lên, môi trường xung quanh bắt đầu nóng dần. Gióng hí hửng cưỡi trên lưng ngựa sắt, phun lửa.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Chưa bao giờ có một đứa trẻ nào mạnh mẽ đến vậy.\nCHARACTERS IN SCENE: Gióng - Phiên bản Thanh Niên\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Nghe đây! Giặc hãy chờ ta!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-thanh-nien.png"
+      ],
+      "page_number": 3,
+      "page_order": 5,
+      "narration": "Chưa bao giờ có một đứa trẻ nào mạnh mẽ đến vậy.",
+      "dialogue": [
+        {
+          "character": "Gióng",
+          "text": "Nghe đây! Giặc hãy chờ ta!"
+        }
+      ]
+    },
+    {
+      "panel_id": "page_003_panel_06",
+      "file_name": "page_003_panel_06.jpg",
+      "bbox": {
+        "x": 514.8143,
+        "y": 1189.3715,
+        "w": 481.1857,
+        "h": 584.4063
+      },
+      "aspect_ratio_api": "3:4",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Gióng - Phiên bản Thanh Niên, Ân Vương. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Cảnh bùng nổ, lửa cháy và tiếng thét của giặc. Gióng chiến đấu dũng mãnh, đánh bại quân giặc và cuối cùng bay lên trời.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Gióng biến mất vào mây trời sau khi chiến thắng, để lại sau lưng một huyền thoại.\nCHARACTERS IN SCENE: Gióng - Phiên bản Thanh Niên , Ân Vương\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Hùng Vương EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Chúng ta sẽ lập đền thờ để vinh danh Thánh Gióng!",
+      "ref_images": [
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\giong-thanh-nien.png",
+        "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\an-vuong.png"
+      ],
+      "page_number": 3,
+      "page_order": 6,
+      "narration": "Gióng biến mất vào mây trời sau khi chiến thắng, để lại sau lưng một huyền thoại.",
+      "dialogue": [
+        {
+          "character": "Hùng Vương",
+          "text": "Chúng ta sẽ lập đền thờ để vinh danh Thánh Gióng!"
+        }
+      ]
+    }
+  ]
+}

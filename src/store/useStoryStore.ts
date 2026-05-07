@@ -3,7 +3,7 @@ import type { PanelData, PageData, StoryConfig, WorkflowStep, Character, PanelSc
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const RUN_FOLDER = '/run_20260417_1621_39b2de80';
+const DEFAULT_RUN_FOLDER = '/run_20260417_1621_39b2de80';
 const PAGE_W = 750; // canvas render width in px
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -22,11 +22,10 @@ function makeId(): string {
  * and convert to web URL:
  *   /run_20260417_1621_39b2de80/chars_output/giong.png
  */
-function refImageToUrl(absPath: string): string {
-  // Split on \ or / and take the last segment
+function refImageToUrl(runFolder: string, absPath: string): string {
   const parts = absPath.replace(/\\/g, '/').split('/');
   const filename = parts[parts.length - 1];
-  return `${RUN_FOLDER}/chars_output/${filename}`;
+  return `${runFolder}/chars_output/${filename}`;
 }
 
 /**
@@ -59,12 +58,12 @@ function fileToCharName(filename: string): string {
  *   - name from fileToCharName
  *   - avatar as web URL
  */
-function refImagesToChars(refImages: string[]): Character[] {
+function refImagesToChars(runFolder: string, refImages: string[]): Character[] {
   return refImages.map(absPath => {
-    const url = refImageToUrl(absPath);
+    const url = refImageToUrl(runFolder, absPath);
     const parts = absPath.replace(/\\/g, '/').split('/');
-    const filename = parts[parts.length - 1]; // e.g. "giong.png"
-    const base = filename.replace(/\.[^.]+$/, ''); // "giong"
+    const filename = parts[parts.length - 1];
+    const base = filename.replace(/\.[^.]+$/, '');
     return {
       id: base,
       name: fileToCharName(filename),
@@ -78,29 +77,17 @@ function refImagesToChars(refImages: string[]): Character[] {
   });
 }
 
-/**
- * Check if a panel's ai_output image file exists in the known list.
- * We pre-check statically because we know what's in ai_output.
- */
-const EXISTING_AI_OUTPUT = new Set([
-  'page_001_panel_01', 'page_001_panel_02', 'page_001_panel_03',
-  'page_001_panel_04', 'page_001_panel_05', 'page_001_panel_06',
-  'page_001_panel_07', 'page_001_panel_08',
-  'page_002_panel_02', 'page_002_panel_03', 'page_002_panel_04',
-  'page_002_panel_05', 'page_002_panel_06', 'page_002_panel_07',
-  'page_003_panel_01', 'page_003_panel_02',
-  'page_003_panel_04', 'page_003_panel_05', 'page_003_panel_06',
-  'page_003_panel_07', 'page_003_panel_08',
-]);
+// image_url luôn được set — browser tự xử lý 404 qua onError trong ComicPanel
 
-function aiImageUrl(panelId: string): string {
-  return `${RUN_FOLDER}/ai_output/${panelId}.jpg`;
+function aiImageUrl(runFolder: string, panelId: string): string {
+  return `${runFolder}/ai_output/${panelId}.jpg`;
 }
 
 // ─── Store Interface ──────────────────────────────────────────────────────────
 
 interface StoryState {
   step: WorkflowStep;
+  runFolder: string;            // ← dynamic: user chọn từ picker
   config: StoryConfig;
   globalCharacters: Character[];
   pages: PageData[];
@@ -114,6 +101,7 @@ interface StoryState {
   // Config
   setConfig: (cfg: Partial<StoryConfig>) => void;
   setStep: (s: WorkflowStep) => void;
+  setRunFolder: (folder: string) => void;
 
   // Characters
   addGlobalCharacter: (char: Omit<Character, 'id'>) => void;
@@ -134,6 +122,8 @@ interface StoryState {
 
   // Workflow actions
   loadFromRunFolder: () => Promise<void>;
+  generateProceduralLayout: () => void;   // ← tạo layout từ config, không cần run folder
+  generateAllScripts: () => Promise<void>; // ← tạo kịch bản mock cho từng panel
   generateAllImages: () => Promise<void>;
 
   // Derived
@@ -143,7 +133,8 @@ interface StoryState {
 // ─── Store ───────────────────────────────────────────────────────────────────
 
 export const useStoryStore = create<StoryState>((set, get) => ({
-  step: 'scenario',
+  step: 'setup',
+  runFolder: DEFAULT_RUN_FOLDER,
   config: {
     title: 'Thánh Gióng',
     genre: 'Cổ tích Việt Nam',
@@ -164,6 +155,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   // ── Config ────────────────────────────────────────────────────────────────
   setConfig: (cfg) => set(s => ({ config: { ...s.config, ...cfg } })),
   setStep: (step) => set({ step }),
+  setRunFolder: (folder) => set({ runFolder: folder, loadError: null, pages: [] }),
 
   // ── Characters ────────────────────────────────────────────────────────────
   addGlobalCharacter: (char) => set(s => ({
@@ -229,7 +221,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
           return {
             ...p,
             status: 'done',
-            image_url: aiImageUrl(id) + '?t=' + Date.now(),
+            image_url: aiImageUrl(get().runFolder, id) + '?t=' + Date.now(),
             image_transform: { x: 0, y: 0, scale: 1 },
           };
         })
@@ -251,11 +243,12 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   // MAIN LOAD: Read panels_with_prompts.json (merged layout + scripts)
   // ════════════════════════════════════════════════════════════════════════
   loadFromRunFolder: async () => {
+    const runFolder = get().runFolder;
     set({ isGenerating: true, loadError: null });
 
     try {
       // ── 1. Fetch panels_with_prompts.json (has BOTH layout bbox AND scripts) ──
-      const res = await fetch(`${RUN_FOLDER}/panels_with_prompts.json`);
+      const res = await fetch(`${runFolder}/panels_with_prompts.json`);
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.url}`);
       const data: {
         meta: { coord_w: number; coord_h: number; total_pages: number; panels_per_page: number; page_aspect: string };
@@ -286,7 +279,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
             charMap.set(base, {
               id: base,
               name: fileToCharName(filename),
-              avatar: `${RUN_FOLDER}/chars_output/${filename}`,
+              avatar: `${runFolder}/chars_output/${filename}`,
               description: '',
               role: base === 'giong' ? 'protagonist'
                   : base === 'an-vuong' ? 'antagonist'
@@ -300,13 +293,11 @@ export const useStoryStore = create<StoryState>((set, get) => ({
       // ── 3. Group panels by page_number ──────────────────────────────────
       const pageMap = new Map<number, PanelData[]>();
       for (const p of data.panels) {
-        const panelId = p.panel_id; // e.g. "page_001_panel_01"
-        const hasImage = EXISTING_AI_OUTPUT.has(panelId);
+        const panelId = p.panel_id;
 
-        // Build characters for THIS panel from its ref_images
-        const panelChars = refImagesToChars(p.ref_images || []);
+        // Luôn set image_url — browser tự xử lý nếu file không tồn tại (onError trong ComicPanel)
+        const panelChars = refImagesToChars(runFolder, p.ref_images || []);
 
-        // Build script
         const script: PanelScript = {
           narration: p.narration || undefined,
           dialogues: p.dialogue?.map(d => ({ character: d.character, text: d.text })) || [],
@@ -320,10 +311,10 @@ export const useStoryStore = create<StoryState>((set, get) => ({
           pageOrder: p.page_order,
           file_name: p.file_name,
           aspect_label: p.aspect_ratio_api || 'unknown',
-          image_url: hasImage ? aiImageUrl(panelId) : '',
+          image_url: aiImageUrl(runFolder, panelId), // luôn set, onError xử lý 404
           script,
           characters: panelChars,
-          status: hasImage ? 'done' : 'scripted',
+          status: 'done',
           frame: {
             x: coordToPixel(p.bbox.x, coord_w),
             y: coordToPixel(p.bbox.y, coord_w),
@@ -368,6 +359,194 @@ export const useStoryStore = create<StoryState>((set, get) => ({
     }
   },
 
+  // ════════════════════════════════════════════════════════════════════════
+  // PROCEDURAL LAYOUT: Sinh layout đa dạng — ngang/vuông/dọc
+  // Row-based templates: mỗi row có heightWeight riêng, mỗi panel có widthWeight riêng
+  // → 1 panel/row = chữ nhật ngang | 2 panel/row = vuông | 3 panel/row = chữ nhật dọc
+  // ════════════════════════════════════════════════════════════════════════
+  generateProceduralLayout: () => {
+    const { config } = get();
+    const { totalPages, panelsPerPage, aspectRatio } = config;
+
+    const PAGE_W = 750;
+    const [rW, rH] = aspectRatio.split(':').map(Number);
+    const PAGE_H = Math.round(PAGE_W * (rH / rW));
+    const PAD = 10;
+    const GAP = 8;
+
+    // ── Layout templates: array of rows, mỗi row = {h: heightWeight, p: widthWeights[]}
+    type Recipe = { h: number; p: number[] }[];
+
+    const RECIPES: Record<number, Recipe[]> = {
+      1: [
+        [{ h: 1, p: [1] }],
+      ],
+      2: [
+        [{ h: 1, p: [1] }, { h: 1, p: [1] }],          // ngang + ngang
+        [{ h: 1, p: [1, 1] }],                           // vuông + vuông
+        [{ h: 1.5, p: [1] }, { h: 1, p: [1] }],         // ngang lớn + ngang nhỏ
+      ],
+      3: [
+        [{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }],      // ngang + 2 vuông
+        [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }],      // 2 vuông + ngang
+        [{ h: 1, p: [1, 1, 1] }],                        // 3 dọc
+        [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }],    // ngang + 2 không đều
+      ],
+      4: [
+        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],                  // 2×2 vuông
+        [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }],                // ngang + 3 dọc
+        [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }],                // 3 dọc + ngang
+        [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }],            // 2 bất đối xứng × 2
+      ],
+      5: [
+        [{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],   // ngang + 2×2
+        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }],                   // 2 vuông + 3 dọc
+        [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }],                   // 3 dọc + 2 vuông
+        [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }], // ngang + 2 đảo chiều
+      ],
+      6: [
+        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],            // 2×3 dọc
+        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }],  // 3×2 vuông
+        [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], // ngang+2+3
+        [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }],   // 3+ngang+2
+      ],
+      7: [
+        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],  // ngang+3+3
+        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }],    // 2+3+2
+        [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }], // 3+2+2
+      ],
+      8: [
+        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], // 4×2
+        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], // ngang+3+2+2
+        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], // 2+3+3
+        [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }], // kiểu Thánh Gióng
+      ],
+    };
+
+    // Tìm recipe gần nhất nếu không có exact match
+    const getRecipes = (n: number): Recipe[] => {
+      if (RECIPES[n]) return RECIPES[n];
+      const keys = Object.keys(RECIPES).map(Number).sort((a, b) => Math.abs(a - n) - Math.abs(b - n));
+      return RECIPES[keys[0]];
+    };
+
+    const pages: PageData[] = [];
+
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      const recipes = getRecipes(panelsPerPage);
+      // Xoay vòng templates qua các trang để có sự đa dạng
+      const recipe = recipes[(pageNum - 1) % recipes.length];
+
+      const totalHWeight = recipe.reduce((s, r) => s + r.h, 0);
+      const availH = PAGE_H - PAD * 2 - GAP * (recipe.length - 1);
+      const availW = PAGE_W - PAD * 2;
+
+      const panels: PanelData[] = [];
+      let panelIdx = 0;
+      let curY = PAD;
+
+      for (let ri = 0; ri < recipe.length; ri++) {
+        const row = recipe[ri];
+        const rowH = Math.round((row.h / totalHWeight) * availH);
+        const totalWWeight = row.p.reduce((s, w) => s + w, 0);
+        let curX = PAD;
+
+        for (let pi = 0; pi < row.p.length; pi++) {
+          const isLastInRow = pi === row.p.length - 1;
+          const panelW = isLastInRow
+            ? PAGE_W - PAD - curX
+            : Math.round((row.p[pi] / totalWWeight) * availW);
+
+          const panelId = `page_${String(pageNum).padStart(3,'0')}_panel_${String(panelIdx + 1).padStart(2,'0')}`;
+          const ratio = panelW / rowH;
+          const shapeLabel = ratio >= 1.4 ? '16:9' : ratio <= 0.8 ? '9:16' : '1:1';
+
+          panels.push({
+            id: panelId,
+            pageId: `page_${pageNum}`,
+            globalOrder: (pageNum - 1) * panelsPerPage + panelIdx + 1,
+            pageOrder: panelIdx + 1,
+            file_name: `${panelId}.jpg`,
+            aspect_label: shapeLabel,
+            image_url: '',
+            script: { narration: '', dialogues: [], ai_prompt: '' },
+            characters: [],
+            status: 'empty',
+            frame: { x: curX, y: curY, width: panelW, height: rowH },
+            image_transform: { x: 0, y: 0, scale: 1 },
+          });
+
+          curX += panelW + GAP;
+          panelIdx++;
+        }
+        curY += rowH + GAP;
+      }
+
+      pages.push({ id: `page_${pageNum}`, pageNumber: pageNum, panels });
+    }
+
+    set({
+      pages,
+      step: 'layout',
+      selectedPageId: pages[0]?.id ?? null,
+      selectedPanelId: null,
+      loadError: null,
+    });
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // GENERATE ALL SCRIPTS: Điền kịch bản placeholder cho từng panel
+  // (Thực tế sẽ gọi AI, hiện tại là mock)
+  // ════════════════════════════════════════════════════════════════════════
+  generateAllScripts: async () => {
+    const { pages, config } = get();
+    if (pages.length === 0) return;
+
+    set({ isGenerating: true });
+
+    const scriptTemplates = [
+      { narration: 'Cảnh mở đầu, giới thiệu bối cảnh câu chuyện.' },
+      { narration: 'Nhân vật chính xuất hiện lần đầu.' },
+      { narration: 'Tình huống căng thẳng bắt đầu hình thành.' },
+      { narration: 'Cuộc đối thoại quan trọng diễn ra.' },
+      { narration: 'Điểm đột phá của cốt truyện.' },
+      { narration: 'Nhân vật đưa ra quyết định quan trọng.' },
+      { narration: 'Cao trào của câu chuyện.' },
+      { narration: 'Giải quyết mâu thuẫn và kết thúc.' },
+    ];
+
+    for (const pg of pages) {
+      for (let i = 0; i < pg.panels.length; i++) {
+        const panel = pg.panels[i];
+        if (panel.status !== 'empty') continue;
+
+        await new Promise(r => setTimeout(r, 120));
+
+        const template = scriptTemplates[i % scriptTemplates.length];
+        set(s => ({
+          pages: s.pages.map(p => ({
+            ...p,
+            panels: p.panels.map(pp =>
+              pp.id === panel.id
+                ? {
+                    ...pp,
+                    status: 'scripted',
+                    script: {
+                      narration: `[Trang ${pg.pageNumber} · Khung ${i + 1}] ${template.narration}`,
+                      dialogues: [],
+                      ai_prompt: `${config.genre} style, ${config.title}, panel ${i + 1}: ${template.narration}`,
+                    },
+                  }
+                : pp
+            ),
+          })),
+        }));
+      }
+    }
+
+    set({ isGenerating: false });
+  },
+
   // ── Generate all images (simulate calling backend per-panel) ─────────────
   generateAllImages: async () => {
     const { pages } = get();
@@ -390,7 +569,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
             panels: p.panels.map(pp => pp.id === panel.id ? {
               ...pp,
               status: 'done',
-              image_url: aiImageUrl(panel.id),
+              image_url: aiImageUrl(get().runFolder, panel.id),
               image_transform: { x: 0, y: 0, scale: 1 },
             } : pp)
           })),

@@ -129,6 +129,171 @@ const AddCharacterForm: React.FC = () => {
   );
 };
 
+// ─── Run Folder types ─────────────────────────────────────────────────────────
+interface RunEntry {
+  id: string;
+  created_at: string;
+  title: string;
+  description: string;
+  total_pages: number;
+  panels_per_page: number;
+  has_ai_output: boolean;
+  data_file: string;
+}
+
+// ─── Run Folder Picker ────────────────────────────────────────────────────────
+const RunFolderPicker: React.FC = () => {
+  const runFolder = useStoryStore(s => s.runFolder);
+  const setRunFolder = useStoryStore(s => s.setRunFolder);
+  const isGenerating = useStoryStore(s => s.isGenerating);
+  const loadError = useStoryStore(s => s.loadError);
+  const loadFromRunFolder = useStoryStore(s => s.loadFromRunFolder);
+
+  const [runs, setRuns] = useState<RunEntry[]>([]);
+  const [loadingIndex, setLoadingIndex] = useState(true);
+  const [indexError, setIndexError] = useState<string | null>(null);
+  const [manualInput, setManualInput] = useState('');
+  const [showManual, setShowManual] = useState(false);
+
+  // Load run_index.json khi mount
+  React.useEffect(() => {
+    fetch('/run_index.json')
+      .then(r => r.json())
+      .then(data => { setRuns(data.runs || []); setLoadingIndex(false); })
+      .catch(e => { setIndexError(e.message); setLoadingIndex(false); });
+  }, []);
+
+  const selectedId = runFolder.replace(/^\//, ''); // strip leading /
+
+  const handleSelect = (id: string) => setRunFolder(`/${id}`);
+
+  const handleManualApply = () => {
+    const v = manualInput.trim().replace(/^\//, '');
+    if (v) { setRunFolder(`/${v}`); setShowManual(false); }
+  };
+
+  return (
+    <div className="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-2xl shadow-xl p-6 text-white">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2.5 bg-white/20 rounded-xl shrink-0"><FolderOpen size={22} /></div>
+        <div>
+          <h2 className="font-bold text-lg leading-tight">Load từ Run Folder</h2>
+          <p className="text-indigo-200 text-xs mt-0.5">
+            Chọn output folder muốn xem — mỗi lần chạy pipeline tạo ra 1 folder
+          </p>
+        </div>
+      </div>
+
+      {/* Danh sách runs */}
+      {loadingIndex && (
+        <div className="flex items-center gap-2 text-indigo-200 text-sm py-2">
+          <Loader2 size={15} className="animate-spin" /> Đang đọc danh sách runs...
+        </div>
+      )}
+      {indexError && (
+        <div className="text-amber-200 text-xs mb-3 bg-white/10 rounded-lg px-3 py-2">
+          ⚠️ Không đọc được run_index.json: {indexError}
+        </div>
+      )}
+
+      {runs.length > 0 && (
+        <div className="space-y-2 mb-4 max-h-52 overflow-y-auto pr-1">
+          {[...runs].reverse().map(run => {
+            const isSelected = run.id === selectedId;
+            return (
+              <button
+                key={run.id}
+                onClick={() => handleSelect(run.id)}
+                className={`w-full text-left rounded-xl px-4 py-3 transition-all border
+                  ${isSelected
+                    ? 'bg-white text-indigo-700 border-white shadow-md'
+                    : 'bg-white/10 border-white/20 hover:bg-white/20 text-white'}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <FolderOpen size={14} className={isSelected ? 'text-indigo-500 shrink-0' : 'text-indigo-200 shrink-0'} />
+                    <span className="font-semibold text-sm truncate">{run.title}</span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {run.has_ai_output && (
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium
+                        ${isSelected ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/30 text-emerald-200'}`}>
+                        ✓ Có ảnh AI
+                      </span>
+                    )}
+                    {isSelected && <span className="text-indigo-500 text-xs font-bold">● Đang chọn</span>}
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 mt-1">
+                  <code className={`text-xs font-mono truncate ${isSelected ? 'text-indigo-400' : 'text-indigo-200'}`}>
+                    📁 {run.id}/
+                  </code>
+                  {run.total_pages > 0 && (
+                    <span className={`text-xs ${isSelected ? 'text-slate-500' : 'text-indigo-300'}`}>
+                      {run.total_pages} trang · {run.panels_per_page} khung/trang
+                    </span>
+                  )}
+                  <span className={`text-xs ml-auto ${isSelected ? 'text-slate-400' : 'text-indigo-300'}`}>
+                    {run.created_at.slice(0, 10)}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Nhập thủ công */}
+      {showManual ? (
+        <div className="flex gap-2 mb-4">
+          <input
+            className="flex-1 bg-white/20 border border-white/30 rounded-xl px-3 py-2 text-sm
+              text-white placeholder:text-indigo-300 focus:outline-none focus:bg-white/30"
+            placeholder="run_YYYYMMDD_HHMM_xxxxxxxx"
+            value={manualInput}
+            onChange={e => setManualInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleManualApply()}
+          />
+          <button onClick={handleManualApply}
+            className="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-xl text-sm font-medium transition-all">
+            OK
+          </button>
+          <button onClick={() => setShowManual(false)}
+            className="text-indigo-300 hover:text-white px-2 transition-colors text-xs">
+            Hủy
+          </button>
+        </div>
+      ) : (
+        <button onClick={() => setShowManual(true)}
+          className="text-indigo-200 hover:text-white text-xs mb-4 underline underline-offset-2 transition-colors">
+          + Nhập tên folder thủ công
+        </button>
+      )}
+
+      {/* Load button */}
+      <button
+        onClick={loadFromRunFolder}
+        disabled={isGenerating}
+        className="flex items-center gap-2 bg-white text-indigo-700 font-bold px-6 py-3 rounded-xl
+          hover:bg-indigo-50 disabled:opacity-60 transition-all shadow-md active:scale-95 w-full justify-center"
+      >
+        {isGenerating ? <Loader2 size={18} className="animate-spin" /> : <FolderOpen size={18} />}
+        {isGenerating ? 'Đang đọc dữ liệu...' : `Load "${selectedId}" & Xem Kết Quả`}
+      </button>
+
+      {loadError && (
+        <div className="mt-3 flex items-start gap-2 bg-red-500/20 border border-red-400/40 rounded-xl p-3">
+          <AlertCircle size={16} className="text-red-300 mt-0.5 shrink-0" />
+          <div>
+            <p className="font-semibold text-red-200 text-sm">Lỗi load dữ liệu</p>
+            <p className="text-red-300 text-xs mt-0.5 font-mono">{loadError}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── Main Scenario Step ───────────────────────────────────────────────────────
 export const ScenarioStep: React.FC = () => {
   const config = useStoryStore(s => s.config);
@@ -143,44 +308,7 @@ export const ScenarioStep: React.FC = () => {
       <div className="max-w-3xl mx-auto space-y-6">
 
         {/* ── LOAD FROM RUN FOLDER (primary CTA) ────────────────────────── */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-2xl shadow-xl p-6 text-white">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-white/20 rounded-xl shrink-0">
-              <FolderOpen size={24} />
-            </div>
-            <div className="flex-1">
-              <h2 className="font-bold text-lg">Load từ Run Folder</h2>
-              <p className="text-indigo-200 text-sm mt-1 mb-4">
-                Đọc <code className="bg-white/20 px-1.5 py-0.5 rounded text-xs">panels_with_prompts.json</code> để lấy
-                layout, kịch bản từng khung, nhân vật và ảnh AI đã có.
-              </p>
-              <div className="bg-white/10 rounded-xl px-4 py-2.5 text-sm font-mono text-indigo-100 mb-4 border border-white/20">
-                📁 run_20260417_1621_39b2de80/
-              </div>
-              <button
-                onClick={loadFromRunFolder}
-                disabled={isGenerating}
-                className="flex items-center gap-2 bg-white text-indigo-700 font-bold px-6 py-3 rounded-xl
-                  hover:bg-indigo-50 disabled:opacity-60 transition-all shadow-md active:scale-95"
-              >
-                {isGenerating
-                  ? <Loader2 size={18} className="animate-spin" />
-                  : <FolderOpen size={18} />}
-                {isGenerating ? 'Đang đọc dữ liệu...' : 'Load & Xem Kết Quả Ngay'}
-              </button>
-            </div>
-          </div>
-
-          {loadError && (
-            <div className="mt-4 flex items-start gap-2 bg-red-500/20 border border-red-400/40 rounded-xl p-3">
-              <AlertCircle size={16} className="text-red-300 mt-0.5 shrink-0" />
-              <div>
-                <p className="font-semibold text-red-200 text-sm">Lỗi load dữ liệu</p>
-                <p className="text-red-300 text-xs mt-0.5 font-mono">{loadError}</p>
-              </div>
-            </div>
-          )}
-        </div>
+        <RunFolderPicker />
 
         {/* Divider */}
         <div className="flex items-center gap-3 text-slate-400 text-sm">
@@ -301,17 +429,45 @@ export const ScenarioStep: React.FC = () => {
         </div>
 
         {/* Manual workflow CTA */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-5">
-          <p className="text-sm font-semibold text-slate-600 mb-3 flex items-center gap-2">
-            <Wand2 size={16} className="text-purple-500" />
-            Tạo mới (procedural layout, không dùng run folder)
-          </p>
-          <button
-            onClick={() => useStoryStore.getState().setStep('layout')}
-            className="w-full border-2 border-dashed border-slate-300 hover:border-indigo-400 text-slate-500 hover:text-indigo-600 py-3 rounded-xl text-sm font-medium transition-all"
-          >
-            Tạo layout mới từ đầu →
-          </button>
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-gradient-to-r from-purple-50 to-violet-50">
+            <div className="p-2 bg-purple-100 rounded-xl">
+              <Wand2 size={18} className="text-purple-600" />
+            </div>
+            <div>
+              <p className="font-bold text-slate-800 text-sm">Tạo mới từ đầu (không dùng run folder)</p>
+              <p className="text-xs text-slate-500">Sinh layout grid tự động từ cấu hình bên trên</p>
+            </div>
+          </div>
+          <div className="p-5 space-y-3">
+            <div className="grid grid-cols-3 gap-3 text-center text-xs">
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+                <p className="text-2xl font-black text-indigo-600">{config.totalPages}</p>
+                <p className="text-slate-500 mt-0.5">Trang</p>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+                <p className="text-2xl font-black text-purple-600">{config.panelsPerPage}</p>
+                <p className="text-slate-500 mt-0.5">Khung/trang</p>
+              </div>
+              <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+                <p className="text-2xl font-black text-violet-600">{config.aspectRatio}</p>
+                <p className="text-slate-500 mt-0.5">Tỉ lệ</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              💡 Sẽ tạo <strong>{config.totalPages * config.panelsPerPage} panels</strong> trống dạng grid đều nhau.
+              Sau đó bạn có thể chỉnh kích thước từng panel trong LayoutStep, thêm kịch bản và sinh ảnh AI.
+            </p>
+            <button
+              onClick={() => useStoryStore.getState().generateProceduralLayout()}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-violet-600
+                hover:from-purple-700 hover:to-violet-700 text-white font-bold py-3 rounded-xl
+                text-sm transition-all shadow-md shadow-purple-200 active:scale-95"
+            >
+              <Wand2 size={16} />
+              Tạo {config.totalPages} trang · {config.panelsPerPage} khung/trang →
+            </button>
+          </div>
         </div>
 
       </div>

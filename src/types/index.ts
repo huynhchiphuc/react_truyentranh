@@ -37,7 +37,7 @@ export interface PageData {
   panels: PanelData[];
 }
 
-export type WorkflowStep = 'scenario' | 'layout' | 'generating' | 'result';
+export type WorkflowStep = 'setup' | 'scenario' | 'layout' | 'generating' | 'result';
 
 export interface StoryConfig {
   title: string;
