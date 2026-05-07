@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, BookOpen, ExternalLink } from 'lucide-react';
 
-const RUN_FOLDER = '/run_20260417_1621_39b2de80';
-const TOTAL_PAGES = 3;
+import { useStoryStore } from '../store/useStoryStore';
 
 interface ReaderModeProps {
   initialPage?: number;
@@ -11,13 +10,17 @@ interface ReaderModeProps {
 
 // ─── Full-Screen Storyboard Reader ────────────────────────────────────────────
 export const ReaderMode: React.FC<ReaderModeProps> = ({ initialPage = 1, onClose }) => {
+  const config = useStoryStore(s => s.config);
+  const runFolder = useStoryStore(s => s.runFolder);
+  const totalPages = config.totalPages;
+
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [zoom, setZoom] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
 
   const goTo = useCallback((page: number, dir: 'left' | 'right') => {
-    if (page < 1 || page > TOTAL_PAGES || isAnimating) return;
+    if (page < 1 || page > totalPages || isAnimating) return;
     setDirection(dir);
     setIsAnimating(true);
     setTimeout(() => {
@@ -42,7 +45,7 @@ export const ReaderMode: React.FC<ReaderModeProps> = ({ initialPage = 1, onClose
     return () => window.removeEventListener('keydown', handler);
   }, [currentPage, isAnimating, onClose]);
 
-  const pageImgUrl = `${RUN_FOLDER}/final_pages/page_00${currentPage}.png`;
+  const pageImgUrl = `${runFolder}/final_pages/page_00${currentPage}.png`;
 
   return (
     <div className="fixed inset-0 z-[100] bg-black flex flex-col">
@@ -50,13 +53,13 @@ export const ReaderMode: React.FC<ReaderModeProps> = ({ initialPage = 1, onClose
       <div className="flex items-center justify-between px-6 py-3 bg-black/80 backdrop-blur border-b border-white/10 shrink-0">
         <div className="flex items-center gap-3">
           <BookOpen size={18} className="text-indigo-400" />
-          <span className="text-white font-bold text-sm">Thánh Gióng</span>
+          <span className="text-white font-bold text-sm">{config.title}</span>
           <span className="text-slate-400 text-xs">· Storyboard Reader</span>
         </div>
 
         {/* Page indicators */}
         <div className="flex items-center gap-2">
-          {Array.from({ length: TOTAL_PAGES }, (_, i) => (
+          {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
               onClick={() => goTo(i + 1, i + 1 > currentPage ? 'right' : 'left')}
@@ -128,7 +131,7 @@ export const ReaderMode: React.FC<ReaderModeProps> = ({ initialPage = 1, onClose
         {/* Next area */}
         <button
           onClick={next}
-          disabled={currentPage >= TOTAL_PAGES}
+          disabled={currentPage >= totalPages}
           className="absolute right-0 top-0 bottom-0 w-20 flex items-center justify-center
             bg-gradient-to-l from-black/60 to-transparent z-10
             disabled:opacity-20 hover:from-black/80 transition-all group"
@@ -143,11 +146,11 @@ export const ReaderMode: React.FC<ReaderModeProps> = ({ initialPage = 1, onClose
           ← → chuyển trang &nbsp;·&nbsp; +/- zoom &nbsp;·&nbsp; Esc đóng
         </span>
         <span className="text-white text-sm font-semibold">
-          Trang {currentPage} / {TOTAL_PAGES}
+          Trang {currentPage} / {totalPages}
         </span>
         <a
           href={pageImgUrl}
-          download={`thanh-giong-trang-${currentPage}.png`}
+          download={`${config.title.toLowerCase().replace(/\s+/g, '-')}-trang-${currentPage}.png`}
           className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
         >
           ↓ Tải trang này
