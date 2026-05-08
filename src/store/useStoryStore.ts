@@ -3,7 +3,7 @@ import type { PanelData, PageData, StoryConfig, WorkflowStep, Character, PanelSc
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const DEFAULT_RUN_FOLDER = '/run_20260417_1621_39b2de80';
+const DEFAULT_RUN_FOLDER = 'run_20260417_1537_87ae7fc1';
 const PAGE_W = 750; // canvas render width in px
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -97,6 +97,7 @@ interface StoryState {
   generatingPanelId: string | null;
   showPanelDetail: boolean;
   loadError: string | null;
+  isLayoutMode: boolean; // ← NEW: mode chỉnh sửa layout
 
   // Config
   setConfig: (cfg: Partial<StoryConfig>) => void;
@@ -112,6 +113,7 @@ interface StoryState {
   setSelectedPanel: (id: string | null) => void;
   setSelectedPage: (id: string | null) => void;
   setShowPanelDetail: (v: boolean) => void;
+  setIsLayoutMode: (v: boolean) => void;
 
   // Panel mutations
   updatePanelFrame: (id: string, frame: Partial<PanelData['frame']>) => void;
@@ -123,10 +125,7 @@ interface StoryState {
 
   // Workflow actions
   loadFromRunFolder: () => Promise<void>;
-  generateProceduralLayout: () => void;   // ← tạo layout từ config, không cần run folder
-  randomizePageLayout: (pageId: string) => void; // ← tạo lại layout ngẫu nhiên cho 1 trang cụ thể
-  generateAllScripts: () => Promise<void>; // ← tạo kịch bản mock cho từng panel
-  generateAllImages: () => Promise<void>;
+
 
   // Derived
   getPanel: (id: string) => PanelData | undefined;
@@ -135,7 +134,7 @@ interface StoryState {
 // ─── Store ───────────────────────────────────────────────────────────────────
 
 export const useStoryStore = create<StoryState>((set, get) => ({
-  step: 'setup',
+  step: 'scenario',
   runFolder: DEFAULT_RUN_FOLDER,
   config: {
     title: 'Thánh Gióng',
@@ -153,11 +152,12 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   generatingPanelId: null,
   showPanelDetail: false,
   loadError: null,
+  isLayoutMode: false,
 
   // ── Config ────────────────────────────────────────────────────────────────
   setConfig: (cfg) => set(s => ({ config: { ...s.config, ...cfg } })),
   setStep: (step) => set({ step }),
-  setRunFolder: (folder) => set({ runFolder: folder, loadError: null, pages: [] }),
+  setRunFolder: (folder) => set({ runFolder: folder.replace(/^\//, ''), loadError: null, pages: [] }),
 
   // ── Characters ────────────────────────────────────────────────────────────
   addGlobalCharacter: (char) => set(s => ({
@@ -166,36 +166,126 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   removeGlobalCharacter: (id) => set(s => ({
     globalCharacters: s.globalCharacters.filter(c => c.id !== id)
   })),
-  updateGlobalCharacter: (id, partial) => set(s => ({
-    globalCharacters: s.globalCharacters.map(c => c.id === id ? { ...c, ...partial } : c)
-  })),
+  updateGlobalCharacter: async (id, partial) => {
+    set(s => ({
+      globalCharacters: s.globalCharacters.map(c => c.id === id ? { ...c, ...partial } : c)
+    }));
+
+    // Persist to screenplay_parsed.json
+    try {
+      await fetch('http://localhost:3001/api/save-characters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          runFolder: get().runFolder,
+          characters: get().globalCharacters
+        })
+      });
+    } catch (e) {
+      console.error("Failed to persist character changes", e);
+    }
+  },
 
   // ── Panel selection ───────────────────────────────────────────────────────
   setSelectedPanel: (id) => set({ selectedPanelId: id, showPanelDetail: !!id }),
   setSelectedPage: (id) => set({ selectedPageId: id }),
   setShowPanelDetail: (v) => set({ showPanelDetail: v }),
+  setIsLayoutMode: (v) => set({ isLayoutMode: v }),
 
   // ── Panel mutations ───────────────────────────────────────────────────────
-  updatePanelFrame: (id, frame) => set(s => ({
-    pages: s.pages.map(pg => ({
-      ...pg,
-      panels: pg.panels.map(p => p.id === id ? { ...p, frame: { ...p.frame, ...frame } } : p)
-    }))
-  })),
-  updatePanelPolygon: (id, polygon) => set(s => ({
-    pages: s.pages.map(pg => ({
-      ...pg,
-      panels: pg.panels.map(p => p.id === id ? { ...p, polygon } : p)
-    }))
-  })),
-  updatePanelScript: (id, script) => set(s => ({
-    pages: s.pages.map(pg => ({
-      ...pg,
-      panels: pg.panels.map(p =>
-        p.id === id ? { ...p, script: { ...p.script, ...script }, status: 'scripted' } : p
-      )
-    }))
-  })),
+  updatePanelFrame: async (id, frame) => {
+    set(s => ({
+      pages: s.pages.map(pg => ({
+        ...pg,
+        panels: pg.panels.map(p => p.id === id ? { ...p, frame: { ...p.frame, ...frame } } : p)
+      }))
+    }));
+    
+    // Auto-save layout
+    try {
+      await fetch('http://localhost:3001/api/save-layout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ runFolder: get().runFolder, pages: get().pages })
+      });
+    } catch (e) {}
+  },
+  updatePanelPolygon: async (id, polygon) => {
+    set(s => {
+      const oldPanel = s.pages.flatMap(pg => pg.panels).find(p => p.id === id);
+      if (!oldPanel) return s;
+
+      const oldPoly = oldPanel.polygon || [];
+      let vertexIdx = -1;
+      let oldPos = { x: 0, y: 0 };
+      let newPos = { x: 0, y: 0 };
+
+      if (oldPoly.length === polygon.length) {
+        for (let i = 0; i < polygon.length; i++) {
+          if (polygon[i].x !== oldPoly[i].x || polygon[i].y !== oldPoly[i].y) {
+            vertexIdx = i;
+            oldPos = oldPoly[i];
+            newPos = polygon[i];
+            break;
+          }
+        }
+      }
+
+      return {
+        pages: s.pages.map(pg => {
+          if (pg.id !== oldPanel.pageId) return pg;
+          return {
+            ...pg,
+            panels: pg.panels.map(p => {
+              if (p.id === id) return { ...p, polygon };
+              if (!p.polygon || p.polygon.length === 0) return p;
+              const pPoly = [...p.polygon];
+              let changed = false;
+              for (let i = 0; i < pPoly.length; i++) {
+                const dist = Math.sqrt(Math.pow(pPoly[i].x - oldPos.x, 2) + Math.pow(pPoly[i].y - oldPos.y, 2));
+                if (dist < 8) {
+                  pPoly[i] = newPos;
+                  changed = true;
+                }
+              }
+              return changed ? { ...p, polygon: pPoly } : p;
+            })
+          };
+        })
+      };
+    });
+
+    // Auto-save layout
+    try {
+      await fetch('http://localhost:3001/api/save-layout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ runFolder: get().runFolder, pages: get().pages })
+      });
+    } catch (e) {}
+  },
+  updatePanelScript: async (id, script) => {
+    set(s => ({
+      pages: s.pages.map(pg => ({
+        ...pg,
+        panels: pg.panels.map(p =>
+          p.id === id ? { ...p, script: { ...p.script, ...script }, status: 'scripted' } : p
+        )
+      }))
+    }));
+
+    // Auto-save panel prompt
+    try {
+      await fetch('http://localhost:3001/api/save-panels', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          runFolder: get().runFolder,
+          panels: get().pages.flatMap(pg => pg.panels)
+        })
+      });
+    } catch (e) {}
+  },
   updatePanelCharacters: (id, chars) => set(s => ({
     pages: s.pages.map(pg => ({
       ...pg,
@@ -276,7 +366,19 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
       const coord_w = data.meta.coord_w;
 
-      // ── 2. Build a map of unique characters from all ref_images ──────────
+      // ── 2. Fetch screenplay_parsed.json for character descriptions ──────
+      let screenplayChars: any[] = [];
+      try {
+        const sRes = await fetch(`${runFolder}/screenplay_parsed.json`);
+        if (sRes.ok) {
+          const sData = await sRes.json();
+          screenplayChars = sData.characters || [];
+        }
+      } catch (e) {
+        console.warn("Could not load screenplay_parsed.json", e);
+      }
+
+      // ── 3. Build a map of unique characters from all ref_images ──────────
       const charMap = new Map<string, Character>(); // key = base filename (e.g. "giong")
       for (const panel of data.panels) {
         for (const absPath of (panel.ref_images || [])) {
@@ -284,11 +386,17 @@ export const useStoryStore = create<StoryState>((set, get) => ({
           const filename = parts[parts.length - 1];
           const base = filename.replace(/\.[^.]+$/, '');
           if (!charMap.has(base)) {
+            // Find description from screenplay
+            const sChar = screenplayChars.find(sc => 
+              sc.slug === base || 
+              sc.name.toLowerCase().includes(fileToCharName(filename).toLowerCase())
+            );
+
             charMap.set(base, {
               id: base,
               name: fileToCharName(filename),
               avatar: `${runFolder}/chars_output/${filename}`,
-              description: '',
+              description: sChar?.description || '',
               role: base === 'giong' ? 'protagonist'
                   : base === 'an-vuong' ? 'antagonist'
                   : 'supporting',
@@ -363,429 +471,10 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
     } catch (err: any) {
       console.error('[loadFromRunFolder]', err);
-      set({ isGenerating: false, loadError: err?.message || String(err) });
+      set({ 
+        isGenerating: false, 
+        loadError: `Không thể load folder "${runFolder}". Lỗi: ${err?.message || String(err)}` 
+      });
     }
-  },
-
-  // ════════════════════════════════════════════════════════════════════════
-  // PROCEDURAL LAYOUT: Sinh layout đa dạng — ngang/vuông/dọc
-  // Row-based templates: mỗi row có heightWeight riêng, mỗi panel có widthWeight riêng
-  // → 1 panel/row = chữ nhật ngang | 2 panel/row = vuông | 3 panel/row = chữ nhật dọc
-  // ════════════════════════════════════════════════════════════════════════
-  generateProceduralLayout: () => {
-    const { config } = get();
-    const { totalPages, panelsPerPage, aspectRatio } = config;
-
-    const PAGE_W = 750;
-    const [rW, rH] = aspectRatio.split(':').map(Number);
-    const PAGE_H = Math.round(PAGE_W * (rH / rW));
-    const PAD = 10;
-    const GAP = 8;
-
-    // ── Layout templates: array of rows, mỗi row = {h: heightWeight, p: widthWeights[]}
-    type Recipe = { h: number; p: number[] }[];
-
-    const RECIPES: Record<number, Recipe[]> = {
-      1: [[{ h: 1, p: [1] }]],
-      2: [
-        [{ h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1.5, p: [1] }], [{ h: 1, p: [2, 1] }], [{ h: 1, p: [1, 2] }],
-        [{ h: 1, p: [3, 1] }], [{ h: 1, p: [1, 3] }]
-      ],
-      3: [
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }], [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1, 1] }], 
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }], [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1, 1] }], [{ h: 1, p: [1, 2, 1] }], [{ h: 1, p: [1, 1, 2] }],
-        [{ h: 1, p: [1.5, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1.5, 1] }],
-        [{ h: 1, p: [1, 1.5] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [3, 1, 1] }], [{ h: 1, p: [1, 1, 3] }],
-        [{ h: 1, p: [1, 1] }, { h: 1.5, p: [1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1, 1] }]
-      ],
-      4: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }], 
-        [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }],
-        [{ h: 1, p: [1, 1, 1, 1] }], [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1.2, p: [1, 1] }],
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [2, 1, 1] }], [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 2] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 2, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [3, 1] }, { h: 1, p: [1, 3] }],
-        [{ h: 1, p: [1, 3] }, { h: 1, p: [3, 1] }], [{ h: 1, p: [2, 1, 1, 2] }], [{ h: 1, p: [1, 2, 2, 1] }]
-      ],
-      5: [
-        [{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }], 
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 2, 1] }],
-        [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 2] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 3] }, { h: 1, p: [3, 1] }], [{ h: 1, p: [1, 1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 1, 2] }]
-      ],
-      6: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], 
-        [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1, 2] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 2, 1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [2, 1, 1] }], [{ h: 1, p: [3, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 3] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [1, 2, 2, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      7: [
-        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], 
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }], [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [2, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      8: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], 
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }], [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 2] }, { h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }]
-      ],
-      9: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 2] }, { h: 1, p: [1, 2, 1] }, { h: 1, p: [2, 1, 2] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1, 2] }]
-      ],
-      10: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      11: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1, 1, 1] }]
-      ],
-      12: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }]
-      ],
-    };
-
-    const getRecipes = (n: number): Recipe[] => {
-      if (RECIPES[n]) return RECIPES[n];
-      const keys = Object.keys(RECIPES).map(Number).sort((a, b) => Math.abs(a - n) - Math.abs(b - n));
-      return RECIPES[keys[0]];
-    };
-
-    const buildPanelsForRecipe = (recipe: Recipe, pageNum: number, panelsPerPage: number): PanelData[] => {
-      const totalHWeight = recipe.reduce((s, r) => s + r.h, 0);
-      const availH = PAGE_H - PAD * 2 - GAP * (recipe.length - 1);
-      const availW = PAGE_W - PAD * 2;
-      const panels: PanelData[] = [];
-      let panelIdx = 0;
-      let curY = PAD;
-
-      for (let ri = 0; ri < recipe.length; ri++) {
-        const row = recipe[ri];
-        const rowH = Math.round((row.h / totalHWeight) * availH);
-        const totalWWeight = row.p.reduce((s, w) => s + w, 0);
-        let curX = PAD;
-
-        for (let pi = 0; pi < row.p.length; pi++) {
-          const isLastInRow = pi === row.p.length - 1;
-          const panelW = isLastInRow ? PAGE_W - PAD - curX : Math.round((row.p[pi] / totalWWeight) * availW);
-          const panelId = `page_${String(pageNum).padStart(3,'0')}_panel_${String(panelIdx + 1).padStart(2,'0')}`;
-          const ratio = panelW / rowH;
-          const shapeLabel = ratio >= 1.4 ? '16:9' : ratio <= 0.8 ? '9:16' : '1:1';
-
-          panels.push({
-            id: panelId,
-            pageId: `page_${pageNum}`,
-            globalOrder: (pageNum - 1) * panelsPerPage + panelIdx + 1,
-            pageOrder: panelIdx + 1,
-            file_name: `${panelId}.jpg`,
-            aspect_label: shapeLabel,
-            image_url: '',
-            script: { narration: '', dialogues: [], ai_prompt: '' },
-            characters: [],
-            status: 'empty',
-            frame: { x: curX, y: curY, width: panelW, height: rowH },
-            polygon: [
-              { x: curX, y: curY },
-              { x: curX + panelW, y: curY },
-              { x: curX + panelW, y: curY + rowH },
-              { x: curX, y: curY + rowH }
-            ],
-            image_transform: { x: 0, y: 0, scale: 1 },
-          });
-          curX += panelW + GAP;
-          panelIdx++;
-        }
-        curY += rowH + GAP;
-      }
-      return panels;
-    };
-
-    const pages: PageData[] = [];
-
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      const recipes = getRecipes(panelsPerPage);
-      // Pick random recipe to avoid repeating
-      const recipe = recipes[Math.floor(Math.random() * recipes.length)];
-      const panels = buildPanelsForRecipe(recipe, pageNum, panelsPerPage);
-      pages.push({ id: `page_${pageNum}`, pageNumber: pageNum, panels });
-    }
-
-    set({
-      pages,
-      step: 'layout',
-      selectedPageId: pages[0]?.id ?? null,
-      selectedPanelId: null,
-      loadError: null,
-    });
-  },
-
-  randomizePageLayout: (pageId: string) => {
-    const { pages, config } = get();
-    const { panelsPerPage, aspectRatio } = config;
-    
-    // We need the recipes logic again
-    type Recipe = { h: number; p: number[] }[];
-    const RECIPES: Record<number, Recipe[]> = {
-      1: [[{ h: 1, p: [1] }]],
-      2: [
-        [{ h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1.5, p: [1] }], [{ h: 1, p: [2, 1] }], [{ h: 1, p: [1, 2] }],
-        [{ h: 1, p: [3, 1] }], [{ h: 1, p: [1, 3] }]
-      ],
-      3: [
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1, 1] }], [{ h: 1.3, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1, 1, 1] }], 
-        [{ h: 1, p: [1] }, { h: 1.3, p: [1.5, 1] }], [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1, 1] }], [{ h: 1, p: [1, 2, 1] }], [{ h: 1, p: [1, 1, 2] }],
-        [{ h: 1, p: [1.5, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1.5, 1] }],
-        [{ h: 1, p: [1, 1.5] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [3, 1, 1] }], [{ h: 1, p: [1, 1, 3] }],
-        [{ h: 1, p: [1, 1] }, { h: 1.5, p: [1] }], [{ h: 1.5, p: [1] }, { h: 1, p: [1, 1] }]
-      ],
-      4: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1] }, { h: 1.5, p: [1, 1, 1] }], 
-        [{ h: 1.5, p: [1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1.5, 1] }, { h: 1.2, p: [1, 1.5] }],
-        [{ h: 1, p: [1, 1, 1, 1] }], [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1.2, p: [1, 1] }],
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [2, 1, 1] }], [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 2] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 2, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [3, 1] }, { h: 1, p: [1, 3] }],
-        [{ h: 1, p: [1, 3] }, { h: 1, p: [3, 1] }], [{ h: 1, p: [2, 1, 1, 2] }], [{ h: 1, p: [1, 2, 2, 1] }]
-      ],
-      5: [
-        [{ h: 0.8, p: [1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }], 
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.2, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 2, 1] }],
-        [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 2] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1] }, { h: 1, p: [1, 3] }, { h: 1, p: [3, 1] }], [{ h: 1, p: [1, 1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 1, 1] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [1, 1, 1, 2] }]
-      ],
-      6: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], 
-        [{ h: 0.8, p: [1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }, { h: 1.2, p: [1, 1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1, 2] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 2, 1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [2, 1, 1] }], [{ h: 1, p: [3, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 3] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1] }], [{ h: 1, p: [1] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [1, 2, 2, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      7: [
-        [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], 
-        [{ h: 1, p: [1, 1, 1] }, { h: 1.1, p: [1, 1] }, { h: 1.1, p: [1, 1] }], [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [2, 1] }], [{ h: 1, p: [1, 1, 2] }, { h: 1, p: [2, 1, 1] }, { h: 1, p: [1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      8: [
-        [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }], [{ h: 0.7, p: [1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1.2, 1] }, { h: 1, p: [1, 1.2] }], 
-        [{ h: 1.2, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1.2, p: [1.5, 1] }, { h: 1, p: [1, 1.5] }, { h: 1, p: [1, 1, 1] }, { h: 0.8, p: [1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }], [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 2] }, { h: 1, p: [1, 2, 1] }, { h: 1, p: [1, 1] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }]
-      ],
-      9: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [2, 1, 2] }, { h: 1, p: [1, 2, 1] }, { h: 1, p: [2, 1, 2] }], [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [2, 1, 1] }, { h: 1, p: [1, 1, 2] }]
-      ],
-      10: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }],
-        [{ h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [2, 1] }, { h: 1, p: [1, 1] }]
-      ],
-      11: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }], [{ h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [2, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 2] }, { h: 1, p: [1, 1, 1] }]
-      ],
-      12: [
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }, { h: 1, p: [1, 1, 1, 1] }],
-        [{ h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1, 1] }, { h: 1, p: [1, 1] }, { h: 1, p: [1, 1] }]
-      ],
-    };
-    const getRecipes = (n: number): Recipe[] => {
-      if (RECIPES[n]) return RECIPES[n];
-      const keys = Object.keys(RECIPES).map(Number).sort((a, b) => Math.abs(a - n) - Math.abs(b - n));
-      return RECIPES[keys[0]];
-    };
-
-    const targetPage = pages.find(p => p.id === pageId);
-    if (!targetPage) return;
-
-    const recipes = getRecipes(panelsPerPage);
-    // Pick a random recipe
-    const recipe = recipes[Math.floor(Math.random() * recipes.length)];
-
-    const PAGE_W = 750;
-    const [rW, rH] = aspectRatio.split(':').map(Number);
-    const PAGE_H = Math.round(PAGE_W * (rH / rW));
-    const PAD = 10;
-    const GAP = 8;
-
-    const totalHWeight = recipe.reduce((s, r) => s + r.h, 0);
-    const availH = PAGE_H - PAD * 2 - GAP * (recipe.length - 1);
-    const availW = PAGE_W - PAD * 2;
-    const panels: PanelData[] = [];
-    let panelIdx = 0;
-    let curY = PAD;
-
-    for (let ri = 0; ri < recipe.length; ri++) {
-      const row = recipe[ri];
-      const rowH = Math.round((row.h / totalHWeight) * availH);
-      const totalWWeight = row.p.reduce((s, w) => s + w, 0);
-      let curX = PAD;
-
-      for (let pi = 0; pi < row.p.length; pi++) {
-        const isLastInRow = pi === row.p.length - 1;
-        const panelW = isLastInRow ? PAGE_W - PAD - curX : Math.round((row.p[pi] / totalWWeight) * availW);
-        const panelId = `page_${String(targetPage.pageNumber).padStart(3,'0')}_panel_${String(panelIdx + 1).padStart(2,'0')}`;
-        const ratio = panelW / rowH;
-        const shapeLabel = ratio >= 1.4 ? '16:9' : ratio <= 0.8 ? '9:16' : '1:1';
-
-        // Keep old script and characters if they exist
-        const oldPanel = targetPage.panels[panelIdx];
-
-        panels.push({
-          id: panelId,
-          pageId: `page_${targetPage.pageNumber}`,
-          globalOrder: (targetPage.pageNumber - 1) * panelsPerPage + panelIdx + 1,
-          pageOrder: panelIdx + 1,
-          file_name: `${panelId}.jpg`,
-          aspect_label: shapeLabel,
-          image_url: oldPanel?.image_url || '',
-          script: oldPanel?.script || { narration: '', dialogues: [], ai_prompt: '' },
-          characters: oldPanel?.characters || [],
-          status: oldPanel?.status || 'empty',
-          frame: { x: curX, y: curY, width: panelW, height: rowH },
-          polygon: [
-            { x: curX, y: curY },
-            { x: curX + panelW, y: curY },
-            { x: curX + panelW, y: curY + rowH },
-            { x: curX, y: curY + rowH }
-          ],
-          image_transform: oldPanel?.image_transform || { x: 0, y: 0, scale: 1 },
-        });
-        curX += panelW + GAP;
-        panelIdx++;
-      }
-      curY += rowH + GAP;
-    }
-
-    set(s => ({
-      pages: s.pages.map(p => p.id === pageId ? { ...p, panels } : p)
-    }));
-  },
-
-  // ════════════════════════════════════════════════════════════════════════
-  // GENERATE ALL SCRIPTS: Điền kịch bản placeholder cho từng panel
-  // (Thực tế sẽ gọi AI, hiện tại là mock)
-  // ════════════════════════════════════════════════════════════════════════
-  generateAllScripts: async () => {
-    const { pages, config } = get();
-    if (pages.length === 0) return;
-
-    set({ isGenerating: true });
-
-    const scriptTemplates = [
-      { narration: 'Cảnh mở đầu, giới thiệu bối cảnh câu chuyện.' },
-      { narration: 'Nhân vật chính xuất hiện lần đầu.' },
-      { narration: 'Tình huống căng thẳng bắt đầu hình thành.' },
-      { narration: 'Cuộc đối thoại quan trọng diễn ra.' },
-      { narration: 'Điểm đột phá của cốt truyện.' },
-      { narration: 'Nhân vật đưa ra quyết định quan trọng.' },
-      { narration: 'Cao trào của câu chuyện.' },
-      { narration: 'Giải quyết mâu thuẫn và kết thúc.' },
-    ];
-
-    for (const pg of pages) {
-      for (let i = 0; i < pg.panels.length; i++) {
-        const panel = pg.panels[i];
-        if (panel.status !== 'empty') continue;
-
-        await new Promise(r => setTimeout(r, 120));
-
-        const template = scriptTemplates[i % scriptTemplates.length];
-        set(s => ({
-          pages: s.pages.map(p => ({
-            ...p,
-            panels: p.panels.map(pp =>
-              pp.id === panel.id
-                ? {
-                    ...pp,
-                    status: 'scripted',
-                    script: {
-                      narration: `[Trang ${pg.pageNumber} · Khung ${i + 1}] ${template.narration}`,
-                      dialogues: [],
-                      ai_prompt: `${config.genre} style, ${config.title}, panel ${i + 1}: ${template.narration}`,
-                    },
-                  }
-                : pp
-            ),
-          })),
-        }));
-      }
-    }
-
-    set({ isGenerating: false });
-  },
-
-  // ── Generate all images (simulate calling backend per-panel) ─────────────
-  generateAllImages: async () => {
-    const { pages } = get();
-    set({ isGenerating: true, step: 'generating' });
-
-    for (const pg of pages) {
-      for (const panel of pg.panels) {
-        if (panel.status === 'done') continue; // skip already-generated
-        set(s => ({
-          pages: s.pages.map(p => ({
-            ...p,
-            panels: p.panels.map(pp => pp.id === panel.id ? { ...pp, status: 'generating' } : pp)
-          })),
-          generatingPanelId: panel.id,
-        }));
-        await new Promise(r => setTimeout(r, 500 + Math.random() * 600));
-        set(s => ({
-          pages: s.pages.map(p => ({
-            ...p,
-            panels: p.panels.map(pp => pp.id === panel.id ? {
-              ...pp,
-              status: 'done',
-              image_url: aiImageUrl(get().runFolder, panel.id),
-              image_transform: { x: 0, y: 0, scale: 1 },
-            } : pp)
-          })),
-        }));
-      }
-    }
-
-    set({ isGenerating: false, generatingPanelId: null, step: 'result' });
   },
 }));

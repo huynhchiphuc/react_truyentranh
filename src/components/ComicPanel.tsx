@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { useStoryStore } from '../store/useStoryStore';
 import { Loader2, CheckCircle2, ImageOff, ZoomIn } from 'lucide-react';
@@ -22,6 +22,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
   const updateFrame = useStoryStore(s => s.updatePanelFrame);
   const setSelectedPanel = useStoryStore(s => s.setSelectedPanel);
   const updateImageTransform = useStoryStore(s => s.updateImageTransform);
+  const setShowPanelDetail = useStoryStore(s => s.setShowPanelDetail);
 
   // Image drag state
   const isDraggingImg = useRef(false);
@@ -70,6 +71,9 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
 
   const isSelected = selectedPanelId === panelId;
   const isThisGenerating = generatingPanelId === panelId;
+  const isLayoutMode = useStoryStore(s => s.isLayoutMode);
+  const updatePolygon = useStoryStore(s => s.updatePanelPolygon);
+
 
 
   const tx = panel.image_transform.x + imgOffset.x;
@@ -99,16 +103,20 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
     clipPathStr = `polygon(${poly.map(p => `${p.x - px}px ${p.y - py}px`).join(', ')})`;
   }
 
-  // To prevent <Rnd> from interfering with custom polygon dragging in LayoutStep,
-  // we can disable dragging if we have a polygon, or just let it be.
+  const effectivePoly = poly && poly.length > 0 ? poly : [
+    { x: panel.frame.x, y: panel.frame.y },
+    { x: panel.frame.x + panel.frame.width, y: panel.frame.y },
+    { x: panel.frame.x + panel.frame.width, y: panel.frame.y + panel.frame.height },
+    { x: panel.frame.x, y: panel.frame.y + panel.frame.height }
+  ];
 
   return (
     <Rnd
       size={{ width: pw, height: ph }}
       position={{ x: px, y: py }}
       bounds="parent"
-      enableResizing={isResult && !poly}
-      disableDragging={!isResult || !!poly}
+      enableResizing={!isLayoutMode && isResult && !poly}
+      disableDragging={isLayoutMode || !isResult || !!poly}
       onDragStop={(_e, d) => updateFrame(panel.id, { x: d.x, y: d.y })}
       onResizeStop={(_e, _dir, ref, _delta, pos) => {
         updateFrame(panel.id, {
@@ -119,109 +127,139 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
       }}
       style={{
         position: 'absolute',
-        zIndex: isSelected ? 10 : 1,
+        zIndex: isSelected ? 20 : 1,
       }}
       className={`
-        group bg-slate-100 transition-shadow
-        ${!poly ? `border-2 ${isSelected ? 'shadow-[0_0_0_3px_rgba(99,102,241,0.6)] border-indigo-500' : `border-[${statusColor}]`}` : ''}
+        group transition-shadow
+        ${!poly ? `border-2 ${isSelected ? 'shadow-[0_0_20px_rgba(99,102,241,0.3)] border-indigo-500' : `border-[${statusColor}]`}` : ''}
         ${isResult ? 'cursor-default' : 'cursor-pointer'}
       `}
       onClick={(e: React.MouseEvent) => {
         e.stopPropagation();
         setSelectedPanel(panel.id);
+        setShowPanelDetail(false);
       }}
     >
-      {/* ── SVG Border for Polygon ──────────────────────────────────────── */}
-      {poly && poly.length > 0 && (
-        <svg style={{ position: 'absolute', top: 0, left: 0, width: pw, height: ph, pointerEvents: 'none', zIndex: 20 }}>
-          <polygon
-            points={poly.map(p => `${p.x - px},${p.y - py}`).join(' ')}
-            fill="none"
-            stroke={isSelected ? '#6366f1' : statusColor}
-            strokeWidth={isSelected ? 4 : 2}
-          />
-        </svg>
-      )}
-
-      {/* ── Image area ──────────────────────────────────────────────────── */}
-      <div
-        className={`w-full h-full relative ${isResult && panel.image_url ? 'cursor-grab active:cursor-grabbing' : ''}`}
-        style={{ clipPath: clipPathStr || undefined, overflow: clipPathStr ? 'visible' : 'hidden' }}
+      <div 
+        className="w-full h-full relative"
         onMouseDown={handleImgMouseDown}
         onMouseMove={handleImgMouseMove}
         onMouseUp={handleImgMouseUp}
         onMouseLeave={handleImgMouseUp}
         onWheel={handleWheel}
       >
-        {/* ── Has image ─────────────────────────────────────────────────── */}
-        {panel.image_url && !imgFailed && (
-          <img
-            src={panel.image_url}
-            alt={panel.file_name}
-            className="absolute inset-0 w-full h-full select-none pointer-events-none"
-            style={{
-              objectFit: 'cover',
-              transform: `translate(${tx}px, ${ty}px) scale(${sc})`,
-              transformOrigin: 'center',
-            }}
-            draggable={false}
-            onError={() => setImgFailed(true)}
+        <svg 
+          width={pw} 
+          height={ph} 
+          viewBox={`0 0 ${pw} ${ph}`}
+          style={{ display: 'block', overflow: 'visible' }}
+        >
+          <defs>
+            <clipPath id={`clip-${panel.id}`}>
+              <polygon points={effectivePoly.map(p => `${p.x - px},${p.y - py}`).join(' ')} />
+            </clipPath>
+          </defs>
+
+          {/* Background */}
+          <rect 
+            width={pw} 
+            height={ph} 
+            fill="#f8fafc" 
+            clipPath={`url(#clip-${panel.id})`} 
           />
-        )}
 
-        {/* ── Generating overlay ─────────────────────────────────────────── */}
-        {isThisGenerating && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-sm">
-            <Loader2 className="text-white animate-spin mb-1" size={28} />
-            <span className="text-white text-xs font-medium">Đang tạo...</span>
-          </div>
-        )}
+          {/* The Image */}
+          {panel.image_url && !imgFailed && (
+            <g clipPath={`url(#clip-${panel.id})`}>
+              <image
+                href={panel.image_url}
+                width={pw}
+                height={ph}
+                preserveAspectRatio="xMidYMid slice"
+                style={{
+                  transform: `translate(${tx}px, ${ty}px) scale(${sc})`,
+                  transformOrigin: `${pw/2}px ${ph/2}px`,
+                }}
+              />
+            </g>
+          )}
 
-        {/* ── Empty placeholder ──────────────────────────────────────────── */}
-        {(!panel.image_url || imgFailed) && !isThisGenerating && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-slate-400 select-none">
-            {panel.status === 'scripted' ? (
-              <>
-                <ZoomIn size={20} className="text-purple-400" />
-                <span className="text-xs font-medium text-purple-500">Đã có kịch bản</span>
-              </>
-            ) : (
-              <>
-                <ImageOff size={20} />
-                <span className="text-xs">{panel.pageOrder}</span>
-              </>
-            )}
-          </div>
-        )}
+          {/* The Border */}
+          <polygon
+            points={effectivePoly.map(p => `${p.x - px},${p.y - py}`).join(' ')}
+            fill="none"
+            stroke={isSelected ? '#6366f1' : statusColor}
+            strokeWidth={isSelected ? 4 : 2}
+            style={{ zIndex: 30 }}
+          />
+        </svg>
 
-        {/* ── Done badge ─────────────────────────────────────────────────── */}
-        {panel.status === 'done' && isResult && (
-          <div className="absolute top-1.5 left-1.5 pointer-events-none">
-            <CheckCircle2 size={14} className="text-emerald-400 drop-shadow" />
-          </div>
-        )}
+        {/* ── Overlays (HTML) ────────────────────────────────────────────── */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 40 }}>
+          {/* Generating overlay */}
+          {isThisGenerating && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-sm pointer-events-auto">
+              <Loader2 className="text-white animate-spin mb-1" size={28} />
+              <span className="text-white text-xs font-medium">Đang tạo...</span>
+            </div>
+          )}
 
-        {/* ── Panel order label ──────────────────────────────────────────── */}
-        <div className="absolute bottom-0 left-0 right-0 text-center pointer-events-none">
-          <span className="inline-block bg-black/50 text-white text-[10px] px-1.5 py-0.5 font-mono">
-            {panel.pageOrder}
-          </span>
+          {/* Empty placeholder */}
+          {(!panel.image_url || imgFailed) && !isThisGenerating && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-slate-400 select-none">
+              {panel.status === 'scripted' ? (
+                <>
+                  <ZoomIn size={20} className="text-purple-400" />
+                  <span className="text-xs font-medium text-purple-500">Đã có kịch bản</span>
+                </>
+              ) : (
+                <>
+                  <ImageOff size={20} />
+                  <span className="text-xs">{panel.pageOrder}</span>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Done badge */}
+          {panel.status === 'done' && isResult && (
+            <div className="absolute top-1.5 left-1.5">
+              <CheckCircle2 size={14} className="text-emerald-400 drop-shadow" />
+            </div>
+          )}
+
+          {/* Panel order label */}
+          {!isLayoutMode && (
+            <div className="absolute bottom-0 left-0 right-0 text-center">
+              <span className="inline-block bg-black/50 text-white text-[10px] px-1.5 py-0.5 font-mono">
+                {panel.pageOrder}
+              </span>
+            </div>
+          )}
+
+          {/* Click-to-detail BUTTON */}
+          {!isLayoutMode && isResult && panel.status === 'done' && (
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-600/10 pointer-events-auto">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedPanel(panel.id);
+                  setShowPanelDetail(true);
+                }}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold px-3 py-2 rounded-xl shadow-xl transform scale-90 group-hover:scale-100 transition-all flex items-center gap-2"
+              >
+                <ZoomIn size={14} />
+                Bấm để xem kịch bản
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* ── Click-to-detail hint (result mode) ───────────────────────── */}
-        {isResult && panel.status === 'done' && (
-          <div className={`absolute inset-0 flex items-center justify-center bg-indigo-600/0 group-hover:bg-indigo-600/20 transition-colors duration-200 pointer-events-none`}>
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold bg-indigo-600/80 px-2 py-1 rounded-lg">
-              Bấm để xem kịch bản
-            </span>
-          </div>
+        {/* Resize handles hint */}
+        {!isLayoutMode && isResult && isSelected && !poly && (
+          <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-indigo-500 rounded-tl pointer-events-none" />
         )}
       </div>
-
-      {/* ── Resize handles hint ─────────────────────────────────────────── */}
-      {isResult && isSelected && (
-        <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-indigo-500 rounded-tl pointer-events-none" />
-      )}
     </Rnd>
   );
 };

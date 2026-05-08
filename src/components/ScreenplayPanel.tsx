@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useStoryStore } from '../store/useStoryStore';
 import { X, Quote, ChevronRight, Loader2, Film } from 'lucide-react';
 
-const RUN_FOLDER = '/run_20260417_1621_39b2de80';
-
 interface ScreenplayScene {
   page_order: number;
   characters_raw: string[];
@@ -27,14 +25,15 @@ export const ScreenplayPanel: React.FC<{ onClose: () => void }> = ({ onClose }) 
   const pages = useStoryStore(s => s.pages);
   const setSelectedPage = useStoryStore(s => s.setSelectedPage);
   const setSelectedPanel = useStoryStore(s => s.setSelectedPanel);
+  const runFolder = useStoryStore(s => s.runFolder);
 
   // Load screenplay JSON
   useEffect(() => {
-    fetch(`${RUN_FOLDER}/screenplay_parsed.json`)
+    fetch(`${runFolder}/screenplay_parsed.json`)
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
-  }, []);
+  }, [runFolder]);
 
   // Navigate to panel on map
   const navigateTo = (scene: ScreenplayScene) => {
@@ -61,7 +60,7 @@ export const ScreenplayPanel: React.FC<{ onClose: () => void }> = ({ onClose }) 
     }
   };
 
-  const slugToAvatarUrl = (slug: string) => `${RUN_FOLDER}/chars_output/${slug}.png`;
+  const slugToAvatarUrl = (slug: string) => `${runFolder}/chars_output/${slug}.png`;
 
   return (
     <>

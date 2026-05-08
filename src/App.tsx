@@ -1,18 +1,12 @@
 import React from 'react';
 import { useStoryStore } from './store/useStoryStore';
-import { CharacterSetupStep } from './components/CharacterSetupStep';
 import { ScenarioStep } from './components/ScenarioStep';
-import { LayoutStep } from './components/LayoutStep';
-import { GeneratingStep } from './components/GeneratingStep';
 import { ResultStep } from './components/ResultStep';
-import { BookOpen, Layout, Zap, ImageIcon, ChevronRight, Users } from 'lucide-react';
+import { ImageIcon, ChevronRight, FolderOpen, BookOpen } from 'lucide-react';
 
 // ─── Step Config ─────────────────────────────────────────────────────────────
 const STEPS = [
-  { id: 'setup', label: 'Nhân vật', icon: Users, color: 'violet' },
-  { id: 'scenario', label: 'Kịch bản', icon: BookOpen, color: 'indigo' },
-  { id: 'layout', label: 'Trang & Khung', icon: Layout, color: 'purple' },
-  { id: 'generating', label: 'Sinh ảnh AI', icon: Zap, color: 'amber' },
+  { id: 'scenario', label: 'Chọn Kịch Bản', icon: FolderOpen, color: 'indigo' },
   { id: 'result', label: 'Kết quả', icon: ImageIcon, color: 'emerald' },
 ] as const;
 
@@ -25,7 +19,7 @@ const StepperHeader: React.FC = () => {
 
   const goBack = () => {
     if (step === 'result') {
-      setStep('layout');
+      setStep('scenario');
     } else if (currentIdx > 0) {
       setStep(STEPS[currentIdx - 1].id);
     }
@@ -106,10 +100,7 @@ function App() {
       <StepperHeader />
 
       <main className="flex-1 flex overflow-hidden">
-        {step === 'setup' && <CharacterSetupStep />}
         {step === 'scenario' && <ScenarioStep />}
-        {step === 'layout' && <LayoutStep />}
-        {step === 'generating' && <GeneratingStep />}
         {step === 'result' && <ResultStep />}
       </main>
     </div>

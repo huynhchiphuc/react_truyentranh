@@ -4,7 +4,7 @@
     "panels_per_page": 6,
     "total_panels": 18,
     "page_aspect": "9:16",
-    "coord_w": 1000.0,
+    "coord_w": 1000,
     "coord_h": 1777.7777777777778,
     "generated_at": "2026-04-17T15:37:37"
   },
@@ -13,13 +13,13 @@
       "panel_id": "page_001_panel_01",
       "file_name": "page_001_panel_01.jpg",
       "bbox": {
-        "x": 4.0,
-        "y": 4.0,
+        "x": 4,
+        "y": 4,
         "w": 496.4643,
         "h": 600.4604
       },
       "aspect_ratio_api": "3:4",
-      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh một cánh đồng xanh tươi vào buổi sáng, ánh nắng chiếu rọi. Một người phụ nữ trung niên (Mẹ Gióng) đi giữa cánh đồng, bỗng dừng lại khi nhìn thấy một dấu chân khổng lồ.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Vào thời Hùng Vương, có một người phụ nữ sống một mình, mơ ước có một đứa con.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi bàn chân ai mà to thế này!",
+      "prompt": "STYLE: cổ tích việt nam, color\nABSOLUTELY SINGLE SCENE ONLY. DO NOT DRAW MULTIPLE PANELS. FULL BLEED. NO BORDERS. NO MARGINS. VISUAL CONSISTENCY: Use attached images for Mẹ Gióng. YOU MUST DRAW COMIC SPEECH BUBBLES AND TEXT BOXES containing the dialogue and narration.\nSCENE DESCRIPTION: Toàn cảnh một cánh đồng xanh tươi vào buổi sáng, ánh nắng chiếu rọi. Một người phụ nữ trung niên (Mẹ Gióng) đi giữa cánh đồng, bỗng dừng lại khi nhìn thấy một dấu chân khổng lồ.\nNARRATION TEXT (MUST DRAW AS COMIC TEXT BOX): Vào thời Hùng Vương, có một người phụ nữ sống một mình, mơ ước có một đứa con.\nCHARACTERS IN SCENE: Mẹ Gióng\nDIALOGUE (MUST DRAW DYNAMIC SPEECH BUBBLE SHAPE MATCHING Mẹ Gióng EMOTION, e.g. jagged for shouting, cloud for thinking, smooth for talking): Ôi bàn chân ai mà to thế này!12312313",
       "ref_images": [
         "D:\\git\\python\\python_du_an_truyen_tranh\\projects\\run_20260417_1537_87ae7fc1\\chars_output\\me-giong.png"
       ],
@@ -38,7 +38,7 @@
       "file_name": "page_001_panel_02.jpg",
       "bbox": {
         "x": 510.4643,
-        "y": 4.0,
+        "y": 4,
         "w": 485.5357,
         "h": 600.4604
       },
@@ -61,7 +61,7 @@
       "panel_id": "page_001_panel_03",
       "file_name": "page_001_panel_03.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 614.4604,
         "w": 491.9004,
         "h": 586.4649
@@ -110,7 +110,7 @@
       "panel_id": "page_001_panel_05",
       "file_name": "page_001_panel_05.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 1210.9252,
         "w": 487.4258,
         "h": 562.8526
@@ -159,8 +159,8 @@
       "panel_id": "page_002_panel_01",
       "file_name": "page_002_panel_01.jpg",
       "bbox": {
-        "x": 4.0,
-        "y": 4.0,
+        "x": 4,
+        "y": 4,
         "w": 486.0889,
         "h": 594.875
       },
@@ -185,7 +185,7 @@
       "file_name": "page_002_panel_02.jpg",
       "bbox": {
         "x": 500.0889,
-        "y": 4.0,
+        "y": 4,
         "w": 495.9111,
         "h": 594.875
       },
@@ -209,7 +209,7 @@
       "panel_id": "page_002_panel_03",
       "file_name": "page_002_panel_03.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 608.875,
         "w": 495.9817,
         "h": 583.25
@@ -258,7 +258,7 @@
       "panel_id": "page_002_panel_05",
       "file_name": "page_002_panel_05.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 1202.125,
         "w": 487.7626,
         "h": 571.6527
@@ -304,8 +304,8 @@
       "panel_id": "page_003_panel_01",
       "file_name": "page_003_panel_01.jpg",
       "bbox": {
-        "x": 4.0,
-        "y": 4.0,
+        "x": 4,
+        "y": 4,
         "w": 497.4068,
         "h": 580.9299
       },
@@ -329,7 +329,7 @@
       "file_name": "page_003_panel_02.jpg",
       "bbox": {
         "x": 511.4068,
-        "y": 4.0,
+        "y": 4,
         "w": 484.5932,
         "h": 580.9299
       },
@@ -352,7 +352,7 @@
       "panel_id": "page_003_panel_03",
       "file_name": "page_003_panel_03.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 594.9299,
         "w": 490.1823,
         "h": 584.4416
@@ -400,7 +400,7 @@
       "panel_id": "page_003_panel_05",
       "file_name": "page_003_panel_05.jpg",
       "bbox": {
-        "x": 4.0,
+        "x": 4,
         "y": 1189.3715,
         "w": 500.8143,
         "h": 584.4063
