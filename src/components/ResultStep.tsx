@@ -130,6 +130,10 @@ export const ResultStep: React.FC = () => {
           const elNode = node as HTMLElement;
           const cl = elNode.className;
           if (typeof cl === 'string') {
+            // SPECIFICALLY ALLOW bubbles
+            if (cl.includes('group/bubble')) return true;
+            if (cl.includes('global-detection-portal')) return true;
+
             // Hide handles and interactive UI
             if (cl.includes('cursor-move') || cl.includes('pointer-events-none')) {
               // Keep the main content area (SVG/DIV)
@@ -137,6 +141,8 @@ export const ResultStep: React.FC = () => {
                 if (elNode.querySelector('svg')) return true;
               }
               if (elNode.tagName === 'svg' || elNode.tagName === 'SVG') return true;
+              
+              // If it's just an absolute div (like a handle), hide it
               if (cl.includes('absolute') && !elNode.querySelector('svg')) return false;
             }
             if (cl.includes('bg-amber-500') || cl.includes('bg-indigo-600')) {
@@ -597,6 +603,9 @@ export const ResultStep: React.FC = () => {
                     <div className="w-2 h-2 bg-indigo-600 rounded-full" />
                   </div>
                 ))}
+
+                {/* Portal Target for Detections (to stay on top of everything) */}
+                <div id="global-detection-portal" className="absolute inset-0 pointer-events-none z-[9999]" />
               </div>
             </div>
           </div>

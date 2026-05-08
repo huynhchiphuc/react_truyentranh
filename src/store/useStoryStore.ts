@@ -97,7 +97,8 @@ interface StoryState {
   generatingPanelId: string | null;
   showPanelDetail: boolean;
   loadError: string | null;
-  isLayoutMode: boolean; // ← NEW: mode chỉnh sửa layout
+  isLayoutMode: boolean; 
+  panelDetections: Record<string, {box: number[], text: string, confidence: number}[]>; // panelId -> detections
 
   // Config
   setConfig: (cfg: Partial<StoryConfig>) => void;
@@ -122,6 +123,8 @@ interface StoryState {
   updateImageTransform: (id: string, transform: Partial<PanelData['image_transform']>) => void;
   updatePanelPolygon: (id: string, polygon: {x:number, y:number}[]) => void;
   regeneratePanelImage: (id: string) => Promise<void>;
+  setPanelDetections: (id: string, detections: {box: number[], text: string, confidence: number}[]) => void;
+  updateDetectionBox: (panelId: string, index: number, box: number[]) => void;
 
   // Workflow actions
   loadFromRunFolder: () => Promise<void>;
@@ -153,6 +156,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   showPanelDetail: false,
   loadError: null,
   isLayoutMode: false,
+  panelDetections: {},
 
   // ── Config ────────────────────────────────────────────────────────────────
   setConfig: (cfg) => set(s => ({ config: { ...s.config, ...cfg } })),
@@ -173,7 +177,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
     // Persist to screenplay_parsed.json
     try {
-      await fetch('http://localhost:3001/api/save-characters', {
+      await fetch('http://localhost:3005/api/save-characters', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -203,7 +207,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
     
     // Auto-save layout
     try {
-      await fetch('http://localhost:3001/api/save-layout', {
+      await fetch('http://localhost:3005/api/save-layout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ runFolder: get().runFolder, pages: get().pages })
@@ -257,7 +261,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
     // Auto-save layout
     try {
-      await fetch('http://localhost:3001/api/save-layout', {
+      await fetch('http://localhost:3005/api/save-layout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ runFolder: get().runFolder, pages: get().pages })
@@ -276,7 +280,7 @@ export const useStoryStore = create<StoryState>((set, get) => ({
 
     // Auto-save panel prompt
     try {
-      await fetch('http://localhost:3001/api/save-panels', {
+      await fetch('http://localhost:3005/api/save-panels', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -327,6 +331,18 @@ export const useStoryStore = create<StoryState>((set, get) => ({
       generatingPanelId: null,
     }));
   },
+
+  setPanelDetections: (id, detections) => set(s => ({
+    panelDetections: { ...s.panelDetections, [id]: detections }
+  })),
+
+  updateDetectionBox: (panelId, index, box) => set(s => {
+    const dets = [...(s.panelDetections[panelId] || [])];
+    if (dets[index]) {
+      dets[index] = { ...dets[index], box };
+    }
+    return { panelDetections: { ...s.panelDetections, [panelId]: dets } };
+  }),
 
   // ── Derived ───────────────────────────────────────────────────────────────
   getPanel: (id) => {

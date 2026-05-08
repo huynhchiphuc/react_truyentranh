@@ -3,7 +3,8 @@ import { useStoryStore } from '../store/useStoryStore';
 import type { Character } from '../types';
 import {
   X, RefreshCcw, Save, Users, FileText, Cpu,
-  MessageSquare, Eye, Check, Plus, Trash2, Quote
+  MessageSquare, Eye, Check, Plus, Trash2, Quote,
+  ScanText, Languages, Wand2
 } from 'lucide-react';
 
 const MOOD_OPTIONS = ['intense', 'calm', 'mysterious', 'joyful', 'tense', 'melancholic', 'epic', 'romantic'];
@@ -35,6 +36,8 @@ export const PanelDetailDrawer: React.FC = () => {
   const updateScript = useStoryStore(s => s.updatePanelScript);
   const updateChars = useStoryStore(s => s.updatePanelCharacters);
   const regenerate = useStoryStore(s => s.regeneratePanelImage);
+  const setGlobalDetections = useStoryStore(s => s.setPanelDetections);
+  const allDetections = useStoryStore(s => s.panelDetections);
 
   // Local state
   const [tab, setTab] = useState<'script' | 'chars' | 'info'>('script');
@@ -45,6 +48,7 @@ export const PanelDetailDrawer: React.FC = () => {
   const [dialogues, setDialogues] = useState<{ character: string; text: string }[]>([]);
   const [isRegen, setIsRegen] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [isDetecting, setIsDetecting] = useState(false);
 
   // Sync from panel whenever selected panel changes
   useEffect(() => {
@@ -78,6 +82,35 @@ export const PanelDetailDrawer: React.FC = () => {
   const handleClose = () => {
     setShow(false);
     setSelectedPanel(null);
+  };
+
+  const handleDetectText = async () => {
+    if (!panel) return;
+    setIsDetecting(true);
+    setGlobalDetections(panel.id, []);
+    try {
+        const runFolder = useStoryStore.getState().runFolder;
+        const res = await fetch('http://localhost:3005/api/detect-text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ runFolder, filename: `${panel.id}.jpg` })
+        });
+        const data = await res.json();
+        if (data.error) {
+            console.error(data.error);
+            alert("Lỗi khi tách text: " + data.error);
+        } else {
+            setGlobalDetections(panel.id, data);
+        }
+    } catch (e) {
+        console.error(e);
+    } finally {
+        setIsDetecting(false);
+    }
+  };
+
+  const applyDetection = (text: string) => {
+    setDialogues(d => [...d, { character: '', text }]);
   };
 
   const toggleChar = (char: Character) => {
@@ -260,6 +293,50 @@ export const PanelDetailDrawer: React.FC = () => {
                     <p className="text-xs text-slate-400 italic">Chưa có hội thoại nào</p>
                   )}
                 </div>
+              </div>
+
+              {/* Text Detection Tool */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-slate-600 uppercase tracking-wide flex items-center gap-1">
+                        <ScanText size={12} className="text-indigo-500" /> Tách chữ từ ảnh
+                    </label>
+                    <button 
+                        onClick={handleDetectText}
+                        disabled={isDetecting || !panel.image_url}
+                        className="text-[10px] bg-indigo-600 text-white px-3 py-1 rounded-lg font-bold hover:bg-indigo-700 disabled:opacity-50 transition-all flex items-center gap-1"
+                    >
+                        {isDetecting ? <RefreshCcw size={10} className="animate-spin" /> : <Wand2 size={10} />}
+                        {isDetecting ? 'Đang quét...' : 'Tách Box Text'}
+                    </button>
+                </div>
+                
+                {allDetections[panel.id]?.length > 0 && (
+                    <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-1">
+                        {allDetections[panel.id].map((det, i) => (
+                            <div key={i} className="group relative bg-white border border-slate-100 rounded-xl p-2.5 shadow-sm hover:border-indigo-200 transition-all">
+                                <p className="text-[11px] text-slate-700 font-medium leading-relaxed pr-8">
+                                    {det.text || <span className="text-slate-300 italic">(Không nhận diện được text)</span>}
+                                </p>
+                                <button 
+                                    onClick={() => applyDetection(det.text)}
+                                    className="absolute top-2 right-2 p-1 bg-indigo-50 text-indigo-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-indigo-100"
+                                    title="Thêm vào hội thoại"
+                                >
+                                    <Plus size={14} />
+                                </button>
+                                <div className="mt-1 flex items-center gap-2">
+                                    <span className="text-[8px] uppercase font-bold text-slate-300">Conf: {Math.round(det.confidence * 100)}%</span>
+                                    <span className="text-[8px] uppercase font-bold text-slate-300">Box: {det.box.join(',')}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                
+                {!isDetecting && (!allDetections[panel.id] || allDetections[panel.id].length === 0) && (
+                    <p className="text-[10px] text-slate-400 italic">Sử dụng AI để tự động tìm các ô thoại và trích xuất lời thoại từ ảnh.</p>
+                )}
               </div>
 
               {/* AI Prompt */}

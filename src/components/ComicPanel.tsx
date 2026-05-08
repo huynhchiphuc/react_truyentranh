@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Rnd } from 'react-rnd';
 import { useStoryStore } from '../store/useStoryStore';
 import { Loader2, CheckCircle2, ImageOff, ZoomIn } from 'lucide-react';
@@ -10,25 +11,32 @@ interface ComicPanelProps {
 }
 
 export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = false }) => {
-  const panel = useStoryStore(s => {
+  const panel = useStoryStore(useCallback(s => {
     for (const pg of s.pages) {
       const found = pg.panels.find(p => p.id === panelId);
       if (found) return found;
     }
     return undefined;
-  });
+  }, [panelId]));
+
   const selectedPanelId = useStoryStore(s => s.selectedPanelId);
   const generatingPanelId = useStoryStore(s => s.generatingPanelId);
+  const isLayoutMode = useStoryStore(s => s.isLayoutMode);
+
   const updateFrame = useStoryStore(s => s.updatePanelFrame);
   const setSelectedPanel = useStoryStore(s => s.setSelectedPanel);
   const updateImageTransform = useStoryStore(s => s.updateImageTransform);
   const setShowPanelDetail = useStoryStore(s => s.setShowPanelDetail);
+
+  const detections = useStoryStore(s => s.panelDetections[panelId]);
+  const safeDetections = detections || [];
 
   // Image drag state
   const isDraggingImg = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const [imgOffset, setImgOffset] = useState({ x: 0, y: 0 });
   const [imgFailed, setImgFailed] = useState(false);
+  const [imgSize, setImgSize] = useState<{ w: number, h: number } | null>(null);
 
   // Reset imgFailed khi image_url thay đổi (e.g. switch run folder)
   React.useEffect(() => { setImgFailed(false); }, [panel?.image_url]);
@@ -71,7 +79,6 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
 
   const isSelected = selectedPanelId === panelId;
   const isThisGenerating = generatingPanelId === panelId;
-  const isLayoutMode = useStoryStore(s => s.isLayoutMode);
   const updatePolygon = useStoryStore(s => s.updatePanelPolygon);
 
 
@@ -94,7 +101,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
   let pw = panel.frame.width;
   let ph = panel.frame.height;
   let clipPathStr = '';
-  
+
   if (poly && poly.length > 0) {
     px = Math.min(...poly.map(p => p.x));
     py = Math.min(...poly.map(p => p.y));
@@ -131,7 +138,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
       }}
       className={`
         group transition-shadow
-        ${!poly ? `border-2 ${isSelected ? 'shadow-[0_0_20px_rgba(99,102,241,0.3)] border-indigo-500' : `border-[${statusColor}]`}` : ''}
+        ${isSelected ? 'shadow-[0_0_20px_rgba(99,102,241,0.3)]' : ''}
         ${isResult ? 'cursor-default' : 'cursor-pointer'}
       `}
       onClick={(e: React.MouseEvent) => {
@@ -140,7 +147,7 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
         setShowPanelDetail(false);
       }}
     >
-      <div 
+      <div
         className="w-full h-full relative"
         onMouseDown={handleImgMouseDown}
         onMouseMove={handleImgMouseMove}
@@ -148,9 +155,9 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
         onMouseLeave={handleImgMouseUp}
         onWheel={handleWheel}
       >
-        <svg 
-          width={pw} 
-          height={ph} 
+        <svg
+          width={pw}
+          height={ph}
           viewBox={`0 0 ${pw} ${ph}`}
           style={{ display: 'block', overflow: 'visible' }}
         >
@@ -160,14 +167,6 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
             </clipPath>
           </defs>
 
-          {/* Background */}
-          <rect 
-            width={pw} 
-            height={ph} 
-            fill="#f8fafc" 
-            clipPath={`url(#clip-${panel.id})`} 
-          />
-
           {/* The Image */}
           {panel.image_url && !imgFailed && (
             <g clipPath={`url(#clip-${panel.id})`}>
@@ -176,9 +175,14 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
                 width={pw}
                 height={ph}
                 preserveAspectRatio="xMidYMid slice"
+                onLoad={(e: any) => {
+                  const img = new Image();
+                  img.src = panel.image_url;
+                  img.onload = () => setImgSize({ w: img.width, h: img.height });
+                }}
                 style={{
                   transform: `translate(${tx}px, ${ty}px) scale(${sc})`,
-                  transformOrigin: `${pw/2}px ${ph/2}px`,
+                  transformOrigin: `${pw / 2}px ${ph / 2}px`,
                 }}
               />
             </g>
@@ -194,8 +198,87 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
           />
         </svg>
 
+        {/* ── Detection Boxes (Global Portal Layer) ────────────────────────────── */}
+        {panel.image_url && imgSize && safeDetections.length > 0 && createPortal(
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              left: px, top: py, // Absolute position on canvas
+              width: pw, height: ph,
+              zIndex: 9999,
+              transform: `translate(${tx}px, ${ty}px) scale(${sc})`,
+              transformOrigin: `${pw / 2}px ${ph / 2}px`,
+            }}
+          >
+            {safeDetections.map((det, i) => {
+              const k = Math.max(pw / imgSize.w, ph / imgSize.h);
+              const ox = (pw - imgSize.w * k) / 2;
+              const oy = (ph - imgSize.h * k) / 2;
+
+              const [x1, y1, x2, y2] = det.box;
+              const bx = x1 * k + ox;
+              const by = y1 * k + oy;
+              const bw = (x2 - x1) * k;
+              const bh = (y2 - y1) * k;
+
+              return (
+                <div key={i} className="absolute inset-0">
+                  {/* The Cropped Bubble (Interactive Drag) */}
+                  <div 
+                    className="cursor-move pointer-events-auto group/bubble"
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      const startX = e.clientX;
+                      const startY = e.clientY;
+                      
+                      const onMouseMove = (moveEvent: MouseEvent) => {
+                        const dx = (moveEvent.clientX - startX) / (k * sc);
+                        const dy = (moveEvent.clientY - startY) / (k * sc);
+                        
+                        useStoryStore.getState().updateDetectionBox(panel.id, i, [
+                          x1 + dx, y1 + dy, x2 + dx, y2 + dy
+                        ]);
+                      };
+                      
+                      const onMouseUp = () => {
+                        window.removeEventListener('mousemove', onMouseMove);
+                        window.removeEventListener('mouseup', onMouseUp);
+                      };
+                      
+                      window.addEventListener('mousemove', onMouseMove);
+                      window.addEventListener('mouseup', onMouseUp);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: bx, top: by, width: bw, height: bh,
+                      backgroundImage: `url(${panel.image_url})`,
+                      backgroundSize: `${imgSize.w * k}px ${imgSize.h * k}px`,
+                      backgroundPosition: `-${bx - ox}px -${by - oy}px`,
+                      borderRadius: 4/sc,
+                      // Subtle hover state
+                      transition: 'box-shadow 0.2s',
+                    }}
+                  >
+                    <div className="absolute inset-0 border-2 border-transparent group-hover/bubble:border-indigo-500/50 rounded-[inherit] transition-colors" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>,
+          document.getElementById('global-detection-portal') || document.body
+        )}
+
         {/* ── Overlays (HTML) ────────────────────────────────────────────── */}
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 40 }}>
+          {/* Visual Border (Overlay to prevent shifting) */}
+          {!poly && (
+            <div 
+              className={`absolute inset-0 border-2 pointer-events-none ${isSelected ? 'border-indigo-500' : ''}`}
+              style={{ borderColor: isSelected ? undefined : statusColor }}
+            />
+          )}
+
           {/* Generating overlay */}
           {isThisGenerating && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-sm pointer-events-auto">
