@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStoryStore } from '../store/useStoryStore';
 import { ComicPanel } from './ComicPanel';
 import { Sparkles, Wand2, ChevronLeft, ChevronRight, Loader2, Shuffle } from 'lucide-react';
@@ -17,6 +17,9 @@ export const LayoutStep: React.FC = () => {
 
   const currentPage = pages.find(p => p.id === selectedPageId) || pages[0];
   const currentIndex = pages.findIndex(p => p.id === currentPage?.id);
+
+  // Drag state for tilting corners
+  const [dragGroup, setDragGroup] = useState<{ pointerId: number; startX: number; panelPoints: { panelId: string, pointIndex: number, initialX: number }[] } | null>(null);
 
   const pagePrevNext = (dir: -1 | 1) => {
     const next = pages[currentIndex + dir];
@@ -103,9 +106,27 @@ export const LayoutStep: React.FC = () => {
       {/* Canvas */}
       <div className="flex-1 overflow-auto bg-slate-300 p-4 sm:p-8 text-center">
         <div
-          className="relative bg-white shadow-2xl border border-slate-300 inline-block text-left"
+          className="relative bg-white shadow-2xl border border-slate-300 inline-block text-left select-none"
           style={{ width: PAGE_CANVAS_W, height: pageH, minHeight: 400 }}
           onClick={() => setSelectedPanel(null)}
+          onPointerMove={(e) => {
+            if (!dragGroup) return;
+            const dx = e.clientX - dragGroup.startX;
+            dragGroup.panelPoints.forEach(item => {
+              const panel = currentPage?.panels.find(p => p.id === item.panelId);
+              if (panel && panel.polygon) {
+                 const newPoly = [...panel.polygon];
+                 newPoly[item.pointIndex] = { ...newPoly[item.pointIndex], x: item.initialX + dx };
+                 useStoryStore.getState().updatePanelPolygon(panel.id, newPoly);
+              }
+            });
+          }}
+          onPointerUp={(e) => {
+            if (dragGroup) {
+              e.currentTarget.releasePointerCapture(dragGroup.pointerId);
+              setDragGroup(null);
+            }
+          }}
         >
           {currentPage?.panels.map(panel => (
             <ComicPanel
@@ -115,6 +136,45 @@ export const LayoutStep: React.FC = () => {
               isResult={false}
             />
           ))}
+
+          {/* Draggable Polygon Handles */}
+          <svg style={{position: 'absolute', top: 0, left: 0, width: PAGE_CANVAS_W, height: pageH, pointerEvents: 'none', zIndex: 50}}>
+            {currentPage?.panels.map(panel => {
+              if (!panel.polygon) return null;
+              return panel.polygon.map((pt, i) => {
+                // Skip outer edges (PAD = 10)
+                if (pt.x <= 10 || pt.x >= PAGE_CANVAS_W - 10) return null;
+
+                return (
+                  <circle
+                    key={`${panel.id}-${i}`}
+                    cx={pt.x}
+                    cy={pt.y}
+                    r={8}
+                    fill="#fbbf24"
+                    stroke="#b45309"
+                    strokeWidth={2}
+                    style={{ pointerEvents: 'auto', cursor: 'ew-resize' }}
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                      e.currentTarget.setPointerCapture(e.pointerId);
+                      const group: any[] = [];
+                      currentPage.panels.forEach(p => {
+                        if (p.polygon) {
+                          p.polygon.forEach((polyPt, pi) => {
+                            if (polyPt.y === pt.y && Math.abs(polyPt.x - pt.x) <= 20) {
+                              group.push({ panelId: p.id, pointIndex: pi, initialX: polyPt.x });
+                            }
+                          });
+                        }
+                      });
+                      setDragGroup({ pointerId: e.pointerId, startX: e.clientX, panelPoints: group });
+                    }}
+                  />
+                );
+              });
+            })}
+          </svg>
         </div>
       </div>
     </div>

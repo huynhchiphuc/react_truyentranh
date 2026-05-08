@@ -118,6 +118,7 @@ interface StoryState {
   updatePanelScript: (id: string, script: Partial<PanelScript>) => void;
   updatePanelCharacters: (id: string, chars: Character[]) => void;
   updateImageTransform: (id: string, transform: Partial<PanelData['image_transform']>) => void;
+  updatePanelPolygon: (id: string, polygon: {x:number, y:number}[]) => void;
   regeneratePanelImage: (id: string) => Promise<void>;
 
   // Workflow actions
@@ -179,6 +180,12 @@ export const useStoryStore = create<StoryState>((set, get) => ({
     pages: s.pages.map(pg => ({
       ...pg,
       panels: pg.panels.map(p => p.id === id ? { ...p, frame: { ...p.frame, ...frame } } : p)
+    }))
+  })),
+  updatePanelPolygon: (id, polygon) => set(s => ({
+    pages: s.pages.map(pg => ({
+      ...pg,
+      panels: pg.panels.map(p => p.id === id ? { ...p, polygon } : p)
     }))
   })),
   updatePanelScript: (id, script) => set(s => ({
@@ -500,6 +507,12 @@ export const useStoryStore = create<StoryState>((set, get) => ({
             characters: [],
             status: 'empty',
             frame: { x: curX, y: curY, width: panelW, height: rowH },
+            polygon: [
+              { x: curX, y: curY },
+              { x: curX + panelW, y: curY },
+              { x: curX + panelW, y: curY + rowH },
+              { x: curX, y: curY + rowH }
+            ],
             image_transform: { x: 0, y: 0, scale: 1 },
           });
           curX += panelW + GAP;
@@ -671,6 +684,12 @@ export const useStoryStore = create<StoryState>((set, get) => ({
           characters: oldPanel?.characters || [],
           status: oldPanel?.status || 'empty',
           frame: { x: curX, y: curY, width: panelW, height: rowH },
+          polygon: [
+            { x: curX, y: curY },
+            { x: curX + panelW, y: curY },
+            { x: curX + panelW, y: curY + rowH },
+            { x: curX, y: curY + rowH }
+          ],
           image_transform: oldPanel?.image_transform || { x: 0, y: 0, scale: 1 },
         });
         curX += panelW + GAP;

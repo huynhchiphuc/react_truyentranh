@@ -29,6 +29,7 @@ export interface PanelData {
   image_transform: { x: number; y: number; scale: number };
   status: 'empty' | 'scripted' | 'generating' | 'done' | 'error';
   file_name: string;
+  polygon?: { x: number; y: number }[];
 }
 
 export interface PageData {

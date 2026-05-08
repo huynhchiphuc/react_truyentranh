@@ -77,20 +77,38 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
   const sc = panel.image_transform.scale;
 
   const statusColor = {
-    empty: 'border-slate-300',
-    scripted: 'border-purple-400',
-    generating: 'border-amber-400 animate-pulse',
-    done: 'border-slate-300',
-    error: 'border-red-400',
+    empty: '#cbd5e1', // slate-300
+    scripted: '#c084fc', // purple-400
+    generating: '#fbbf24', // amber-400
+    done: '#cbd5e1',
+    error: '#f87171', // red-400
   }[panel.status];
+
+  const poly = panel.polygon;
+  let px = panel.frame.x;
+  let py = panel.frame.y;
+  let pw = panel.frame.width;
+  let ph = panel.frame.height;
+  let clipPathStr = '';
+  
+  if (poly && poly.length > 0) {
+    px = Math.min(...poly.map(p => p.x));
+    py = Math.min(...poly.map(p => p.y));
+    pw = Math.max(...poly.map(p => p.x)) - px;
+    ph = Math.max(...poly.map(p => p.y)) - py;
+    clipPathStr = `polygon(${poly.map(p => `${p.x - px}px ${p.y - py}px`).join(', ')})`;
+  }
+
+  // To prevent <Rnd> from interfering with custom polygon dragging in LayoutStep,
+  // we can disable dragging if we have a polygon, or just let it be.
 
   return (
     <Rnd
-      size={{ width: panel.frame.width, height: panel.frame.height }}
-      position={{ x: panel.frame.x, y: panel.frame.y }}
+      size={{ width: pw, height: ph }}
+      position={{ x: px, y: py }}
       bounds="parent"
-      enableResizing={isResult}
-      disableDragging={!isResult}
+      enableResizing={isResult && !poly}
+      disableDragging={!isResult || !!poly}
       onDragStop={(_e, d) => updateFrame(panel.id, { x: d.x, y: d.y })}
       onResizeStop={(_e, _dir, ref, _delta, pos) => {
         updateFrame(panel.id, {
@@ -104,9 +122,8 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
         zIndex: isSelected ? 10 : 1,
       }}
       className={`
-        group border-2 bg-slate-100 overflow-hidden transition-shadow
-        ${statusColor}
-        ${isSelected ? 'shadow-[0_0_0_3px_rgba(99,102,241,0.6)] border-indigo-500' : ''}
+        group bg-slate-100 transition-shadow
+        ${!poly ? `border-2 ${isSelected ? 'shadow-[0_0_0_3px_rgba(99,102,241,0.6)] border-indigo-500' : `border-[${statusColor}]`}` : ''}
         ${isResult ? 'cursor-default' : 'cursor-pointer'}
       `}
       onClick={(e: React.MouseEvent) => {
@@ -114,9 +131,22 @@ export const ComicPanel: React.FC<ComicPanelProps> = ({ panelId, isResult = fals
         setSelectedPanel(panel.id);
       }}
     >
+      {/* ── SVG Border for Polygon ──────────────────────────────────────── */}
+      {poly && poly.length > 0 && (
+        <svg style={{ position: 'absolute', top: 0, left: 0, width: pw, height: ph, pointerEvents: 'none', zIndex: 20 }}>
+          <polygon
+            points={poly.map(p => `${p.x - px},${p.y - py}`).join(' ')}
+            fill="none"
+            stroke={isSelected ? '#6366f1' : statusColor}
+            strokeWidth={isSelected ? 4 : 2}
+          />
+        </svg>
+      )}
+
       {/* ── Image area ──────────────────────────────────────────────────── */}
       <div
-        className={`w-full h-full relative overflow-hidden ${isResult && panel.image_url ? 'cursor-grab active:cursor-grabbing' : ''}`}
+        className={`w-full h-full relative ${isResult && panel.image_url ? 'cursor-grab active:cursor-grabbing' : ''}`}
+        style={{ clipPath: clipPathStr || undefined, overflow: clipPathStr ? 'visible' : 'hidden' }}
         onMouseDown={handleImgMouseDown}
         onMouseMove={handleImgMouseMove}
         onMouseUp={handleImgMouseUp}
