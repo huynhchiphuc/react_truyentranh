@@ -88,7 +88,7 @@ export const ResultStep: React.FC = () => {
     const el = document.getElementById('comic-canvas');
     if (!el) return;
     setIsExporting(true);
-    
+
     try {
       // ── Step 1: Find all images (HTML and SVG) and convert to Base64 ──
       const htmlImages = Array.from(el.getElementsByTagName('img'));
@@ -98,7 +98,7 @@ export const ResultStep: React.FC = () => {
       const processImage = async (img: HTMLImageElement | SVGImageElement) => {
         const src = img instanceof HTMLImageElement ? img.src : img.href.baseVal;
         if (!src || src.startsWith('data:')) return;
-        
+
         try {
           const res = await fetch(src);
           const blob = await res.blob();
@@ -107,7 +107,7 @@ export const ResultStep: React.FC = () => {
             reader.onloadend = () => resolve(reader.result as string);
             reader.readAsDataURL(blob);
           });
-          
+
           originalSrcs.set(img, src);
           if (img instanceof HTMLImageElement) {
             img.src = base64;
@@ -141,7 +141,7 @@ export const ResultStep: React.FC = () => {
                 if (elNode.querySelector('svg')) return true;
               }
               if (elNode.tagName === 'svg' || elNode.tagName === 'SVG') return true;
-              
+
               // If it's just an absolute div (like a handle), hide it
               if (cl.includes('absolute') && !elNode.querySelector('svg')) return false;
             }
@@ -208,6 +208,14 @@ export const ResultStep: React.FC = () => {
   // ── Global Joint Logic ────────────────────────────────────────────────────
   const [joints, setJoints] = useState<{ x: number, y: number, connections: { panelId: string, idx: number }[] }[]>([]);
   const [draggingJointIdx, setDraggingJointIdx] = useState<number | null>(null);
+  const [dragConstraints, setDragConstraints] = useState<{
+    isLeft: boolean;
+    isRight: boolean;
+    isTop: boolean;
+    isBottom: boolean;
+    lockX: number;
+    lockY: number;
+  } | null>(null);
 
   useEffect(() => {
     if (!isLayoutMode || !currentPage) {
@@ -216,7 +224,7 @@ export const ResultStep: React.FC = () => {
     }
 
     const newJoints: { x: number, y: number, connections: { panelId: string, idx: number }[] }[] = [];
-    
+
     currentPage.panels.forEach(p => {
       const poly = p.polygon && p.polygon.length > 0 ? p.polygon : [
         { x: p.frame.x, y: p.frame.y },
@@ -246,13 +254,25 @@ export const ResultStep: React.FC = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
+    let targetX = x;
+    let targetY = y;
+
+    if (dragConstraints) {
+      if (dragConstraints.isLeft || dragConstraints.isRight) {
+        targetX = dragConstraints.lockX;
+      }
+      if (dragConstraints.isTop || dragConstraints.isBottom) {
+        targetY = dragConstraints.lockY;
+      }
+    }
+
     const joint = joints[draggingJointIdx];
-    
+
     // Update each connected panel
     joint.connections.forEach(conn => {
       const panel = currentPage.panels.find(p => p.id === conn.panelId);
       if (!panel) return;
-      
+
       const poly = panel.polygon && panel.polygon.length > 0 ? [...panel.polygon] : [
         { x: panel.frame.x, y: panel.frame.y },
         { x: panel.frame.x + panel.frame.width, y: panel.frame.y },
@@ -264,7 +284,7 @@ export const ResultStep: React.FC = () => {
       const oldPx = Math.min(...poly.map(p => p.x));
       const oldPy = Math.min(...poly.map(p => p.y));
 
-      poly[conn.idx] = { x, y };
+      poly[conn.idx] = { x: targetX, y: targetY };
 
       const newPx = Math.min(...poly.map(p => p.x));
       const newPy = Math.min(...poly.map(p => p.y));
@@ -281,10 +301,13 @@ export const ResultStep: React.FC = () => {
       updatePanelPolygon(panel.id, poly);
     });
 
-    setJoints(prev => prev.map((j, i) => i === draggingJointIdx ? { ...j, x, y } : j));
-  }, [draggingJointIdx, joints, currentPage, updatePanelPolygon]);
+    setJoints(prev => prev.map((j, i) => i === draggingJointIdx ? { ...j, x: targetX, y: targetY } : j));
+  }, [draggingJointIdx, joints, currentPage, updatePanelPolygon, dragConstraints]);
 
-  const stopJointDrag = useCallback(() => setDraggingJointIdx(null), []);
+  const stopJointDrag = useCallback(() => {
+    setDraggingJointIdx(null);
+    setDragConstraints(null);
+  }, []);
 
   useEffect(() => {
     if (draggingJointIdx !== null) {
@@ -360,10 +383,10 @@ export const ResultStep: React.FC = () => {
                           }} />
                       ) : null)}
                     </div>
-                    
+
                     {/* Overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
-                    
+
                     {/* Page number badge */}
                     <span className="absolute bottom-2 left-0 right-0 text-center text-white text-[10px] font-black tracking-widest drop-shadow-md">
                       PAGE {pg.pageNumber}
@@ -383,7 +406,7 @@ export const ResultStep: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Footer info */}
                   <div className={`px-3 py-2 text-[10px] font-bold flex items-center justify-between
                     ${isActive ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400'}`}>
@@ -432,8 +455,8 @@ export const ResultStep: React.FC = () => {
           <button
             onClick={() => setActiveTab('comic')}
             className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-t-2xl transition-all duration-300
-              ${activeTab === 'comic' 
-                ? 'bg-slate-50 text-indigo-600 border-t border-l border-r border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] translate-y-[1px]' 
+              ${activeTab === 'comic'
+                ? 'bg-slate-50 text-indigo-600 border-t border-l border-r border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] translate-y-[1px]'
                 : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100/50'}`}
           >
             <div className={`p-1 rounded-lg ${activeTab === 'comic' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400'}`}>
@@ -444,8 +467,8 @@ export const ResultStep: React.FC = () => {
           <button
             onClick={() => setActiveTab('characters')}
             className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold rounded-t-2xl transition-all duration-300
-              ${activeTab === 'characters' 
-                ? 'bg-slate-50 text-indigo-600 border-t border-l border-r border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] translate-y-[1px]' 
+              ${activeTab === 'characters'
+                ? 'bg-slate-50 text-indigo-600 border-t border-l border-r border-slate-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] translate-y-[1px]'
                 : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100/50'}`}
           >
             <div className={`p-1 rounded-lg ${activeTab === 'characters' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-400'}`}>
@@ -485,7 +508,7 @@ export const ResultStep: React.FC = () => {
               <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-indigo-50/50 border border-indigo-100 rounded-2xl">
                 <Info size={14} className="text-indigo-400" />
                 <p className="text-[11px] text-indigo-700/70 font-medium">
-                  {isLayoutMode 
+                  {isLayoutMode
                     ? <><span className="font-bold text-indigo-700">Kéo điểm neo</span> để tạo khung nghiêng · <span className="font-bold text-indigo-700">Tắt chỉnh layout</span> để xem kết quả</>
                     : <><span className="font-bold text-indigo-700">Kéo góc</span> để resize · <span className="font-bold text-indigo-700">Bấm nút</span> xem kịch bản · <span className="font-bold text-indigo-700">← →</span> chuyển trang</>
                   }
@@ -511,8 +534,8 @@ export const ResultStep: React.FC = () => {
                 <button
                   onClick={() => setIsLayoutMode(!isLayoutMode)}
                   className={`flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-2xl border transition-all
-                    ${isLayoutMode 
-                      ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200' 
+                    ${isLayoutMode
+                      ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200'
                       : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300 hover:text-amber-600 shadow-sm'}`}
                 >
                   <Layout size={14} /> {isLayoutMode ? 'Xong layout' : 'Chỉnh layout'}
@@ -521,15 +544,15 @@ export const ResultStep: React.FC = () => {
                 <button
                   onClick={() => setShowScreenplay(v => !v)}
                   className={`flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-2xl border transition-all
-                    ${showScreenplay 
-                      ? 'bg-purple-600 border-purple-600 text-white shadow-lg shadow-purple-200' 
+                    ${showScreenplay
+                      ? 'bg-purple-600 border-purple-600 text-white shadow-lg shadow-purple-200'
                       : 'bg-white border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-600 shadow-sm'}`}
                 >
                   <Film size={14} /> Kịch bản
                 </button>
 
                 <div className="h-8 w-[1px] bg-slate-200 mx-1" />
-                
+
                 <div className="flex items-center bg-slate-800 rounded-2xl overflow-hidden shadow-lg shadow-slate-200">
                   <button
                     onClick={exportAsImage}
@@ -596,7 +619,19 @@ export const ResultStep: React.FC = () => {
                 {isLayoutMode && joints.map((j, idx) => (
                   <div
                     key={idx}
-                    onMouseDown={(e) => { e.stopPropagation(); setDraggingJointIdx(idx); }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      setDraggingJointIdx(idx);
+                      const pageH = Math.max(...(currentPage?.panels.map(p => p.frame.y + p.frame.height) ?? [])) + 20;
+                      setDragConstraints({
+                        isLeft: j.x <= 8,
+                        isRight: j.x >= PAGE_CANVAS_W - 8,
+                        isTop: j.y <= 8,
+                        isBottom: j.y >= pageH - 28,
+                        lockX: j.x,
+                        lockY: j.y
+                      });
+                    }}
                     className="absolute w-6 h-6 bg-white border-2 border-indigo-600 rounded-full shadow-lg cursor-move z-[100] hover:scale-125 transition-transform flex items-center justify-center"
                     style={{ left: j.x, top: j.y, marginLeft: -12, marginTop: -12 }}
                   >
@@ -642,8 +677,8 @@ export const ResultStep: React.FC = () => {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                   {globalCharacters.map((char, idx) => (
-                    <div 
-                      key={char.id} 
+                    <div
+                      key={char.id}
                       className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-12px_rgba(79,70,229,0.12)] hover:border-indigo-100 transition-all duration-500 group animate-scale-in"
                       style={{ animationDelay: `${idx * 50}ms` }}
                     >
@@ -653,7 +688,7 @@ export const ResultStep: React.FC = () => {
                             <img src={char.avatar} alt={char.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                           </div>
                           <div className={`absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg border-2 border-white
-                            ${char.role === 'protagonist' ? 'bg-indigo-500 text-white' : 
+                            ${char.role === 'protagonist' ? 'bg-indigo-500 text-white' :
                               char.role === 'antagonist' ? 'bg-red-500 text-white' : 'bg-slate-700 text-white'}`}>
                             {char.role === 'protagonist' ? 'Chính' : char.role === 'antagonist' ? 'Phản' : 'Phụ'}
                           </div>
@@ -661,7 +696,7 @@ export const ResultStep: React.FC = () => {
                         <div className="flex-1 min-w-0 pt-2">
                           <h3 className="font-black text-slate-800 text-xl leading-tight truncate group-hover:text-indigo-600 transition-colors">{char.name}</h3>
                           <p className="text-slate-400 text-xs font-mono mt-1 opacity-60">ID: {char.id}</p>
-                          
+
                           <div className="mt-4 flex flex-wrap gap-2">
                             <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100">
                               Lớp nhân vật: {char.role === 'protagonist' ? 'Hero' : 'NPC'}
@@ -669,16 +704,16 @@ export const ResultStep: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="mt-6 pt-6 border-t border-slate-50 flex items-center justify-between">
-                        <button 
+                        <button
                           onClick={() => setSelectedCharId(char.id)}
                           className="text-[11px] font-bold text-indigo-600 hover:text-indigo-700 flex items-center gap-1.5 px-4 py-2 bg-indigo-50 rounded-xl transition-all"
                         >
                           Xem chi tiết <ChevronRight size={14} />
                         </button>
                         <div className="flex -space-x-2">
-                          {[1,2,3].map(i => (
+                          {[1, 2, 3].map(i => (
                             <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-slate-100" />
                           ))}
                         </div>
@@ -694,19 +729,19 @@ export const ResultStep: React.FC = () => {
 
       {/* Character detail modal */}
       {selectedCharId && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in" 
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in"
           onClick={() => {
             setSelectedCharId(null);
             setEditDesc(null);
           }}>
-          <div 
+          <div
             className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl animate-scale-in"
             onClick={e => e.stopPropagation()}
           >
             {(() => {
               const char = globalCharacters.find(c => c.id === selectedCharId);
               if (!char) return null;
-              
+
               const appearances = allPanels.filter(p => p.characters.some(c => c.id === char.id));
 
               return (
@@ -717,7 +752,7 @@ export const ResultStep: React.FC = () => {
                       <img src={char.avatar} alt={char.name} className="w-full h-full object-cover" />
                     </div>
                     <div className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4
-                      ${char.role === 'protagonist' ? 'bg-indigo-600 text-white' : 
+                      ${char.role === 'protagonist' ? 'bg-indigo-600 text-white' :
                         char.role === 'antagonist' ? 'bg-red-600 text-white' : 'bg-slate-800 text-white'}`}>
                       {char.role === 'protagonist' ? 'Nhân vật chính' : char.role === 'antagonist' ? 'Nhân vật phản diện' : 'Nhân vật phụ'}
                     </div>
@@ -731,7 +766,7 @@ export const ResultStep: React.FC = () => {
                         <h3 className="text-3xl font-black text-slate-900 leading-tight mb-2">{char.name}</h3>
                         <div className="h-1 w-12 bg-indigo-600 rounded-full" />
                       </div>
-                      <button 
+                      <button
                         onClick={() => setSelectedCharId(null)}
                         className="p-2 hover:bg-slate-100 rounded-full text-slate-400 transition-colors"
                       >
@@ -744,7 +779,7 @@ export const ResultStep: React.FC = () => {
                         <div className="flex justify-between items-center mb-2">
                           <h4 className="text-[10px] uppercase font-black tracking-widest text-slate-400">Tiểu sử & Prompt nhân vật</h4>
                           {editDesc === null ? (
-                            <button 
+                            <button
                               onClick={() => setEditDesc(char.description || '')}
                               className="text-[10px] font-bold text-indigo-600 hover:underline"
                             >
@@ -752,7 +787,7 @@ export const ResultStep: React.FC = () => {
                             </button>
                           ) : (
                             <div className="flex gap-2">
-                              <button 
+                              <button
                                 onClick={() => {
                                   updateGlobalCharacter(char.id, { description: editDesc });
                                   setEditDesc(null);
@@ -761,7 +796,7 @@ export const ResultStep: React.FC = () => {
                               >
                                 Lưu
                               </button>
-                              <button 
+                              <button
                                 onClick={() => setEditDesc(null)}
                                 className="text-[10px] font-bold text-slate-400 hover:underline"
                               >
@@ -770,7 +805,7 @@ export const ResultStep: React.FC = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         {editDesc !== null ? (
                           <textarea
                             value={editDesc}
@@ -789,7 +824,7 @@ export const ResultStep: React.FC = () => {
                         <h4 className="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-3">Xuất hiện trong ({appearances.length})</h4>
                         <div className="grid grid-cols-4 gap-2">
                           {appearances.slice(0, 8).map(p => (
-                            <button 
+                            <button
                               key={p.id}
                               onClick={() => {
                                 setSelectedPage(p.pageId);
